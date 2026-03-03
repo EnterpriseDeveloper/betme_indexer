@@ -4,6 +4,9 @@ import { ChainClient } from "./chain/client";
 import { BlockProcessor } from "./chain/blockProcessor";
 import { PrismaBlockRepository } from "./db/blockRepository";
 import { EventParser } from "./parser/parser";
+import { EventsPrismaRepository } from "./db/eventsRepository";
+import { PartPrismaRepository } from "./db/partRepository";
+import { ValPrismaRepository } from "./db/valRepository";
 
 const port = process.env.PORT || 3000;
 
@@ -16,9 +19,18 @@ app.get("/ping", (req, res) => {
 app.listen(port, async () => {
   console.log(`Server is running on port: ${port}`);
 
-  const blockRepository = new PrismaBlockRepository();
   const client = new ChainClient();
-  const parser = new EventParser();
+
+  const eventRepository = new EventsPrismaRepository();
+  const partRepository = new PartPrismaRepository();
+  const validRepository = new ValPrismaRepository();
+  const parser = new EventParser(
+    eventRepository,
+    partRepository,
+    validRepository,
+  );
+
+  const blockRepository = new PrismaBlockRepository();
   const processor = new BlockProcessor(client, parser, blockRepository);
 
   // Graceful shutdown

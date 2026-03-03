@@ -3,8 +3,6 @@ import {
   CometClient,
   HttpClient,
   Tendermint37Client,
-  WebsocketClient,
-  connectComet,
 } from "@cosmjs/tendermint-rpc";
 import { EventAttribute } from "@cosmjs/tendermint-rpc/build/comet1/responses";
 import { createHash } from "node:crypto";
@@ -74,7 +72,6 @@ export class ChainClient {
     const { earliest } = await this.getAvailableRange();
 
     if (height < earliest) {
-      console.warn(`Adjusting height from ${height} to ${earliest}`);
       height = earliest;
     }
 
@@ -177,7 +174,6 @@ export class ChainClient {
           if (!data?.result?.data?.value?.block) return;
 
           const height = Number(data.result.data.value.block.header.height);
-          console.log("New block:", height);
 
           try {
             const block = await this.getBlock(height);
@@ -190,14 +186,12 @@ export class ChainClient {
 
       ws.onerror = (err) => {
         console.error("WS error:", err);
-        reject(err);
-        this.resubscribe(onBlock);
+        void this.resubscribe(onBlock);
       };
 
       ws.onclose = () => {
         console.warn("WS closed, reconnecting...");
-        reject(new Error("WS closed"));
-        this.resubscribe(onBlock);
+        void this.resubscribe(onBlock);
       };
     });
   }
