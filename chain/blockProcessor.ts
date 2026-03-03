@@ -73,20 +73,19 @@ export class BlockProcessor {
 
   private async processBlock(block: IndexedBlock): Promise<void> {
     await this.parser.parse(block.rawEvents);
-
-    const stats = {
-      height: block.height,
-      txCount: block.txCount,
-    };
-
     await this.repository.saveBlock(block);
   }
 
   async realtimeSync(): Promise<void> {
-    console.info("Starting real-time sync via WebSocket...");
-
-    await this.client.subscribeToNewBlocks(async (block) => {
-      await this.processBlock(block);
-    });
+    while (true) {
+      try {
+        await this.client.subscribeToNewBlocks(async (block) => {
+          await this.processBlock(block);
+        });
+      } catch (error) {
+        console.error("Realtime sync failed, reconnecting in 5s...", { error });
+        await new Promise((r) => setTimeout(r, 5000));
+      }
+    }
   }
 }

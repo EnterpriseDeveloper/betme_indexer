@@ -1,8 +1,10 @@
 import { StargateClient } from "@cosmjs/stargate";
 import {
+  CometClient,
   HttpClient,
   Tendermint37Client,
   WebsocketClient,
+  connectComet,
 } from "@cosmjs/tendermint-rpc";
 import { EventAttribute } from "@cosmjs/tendermint-rpc/build/comet1/responses";
 import { createHash } from "node:crypto";
@@ -11,7 +13,7 @@ import { IndexedBlock, RawEvent } from "./interfaces";
 export class ChainClient {
   private tmClient: Tendermint37Client | null = null;
   private stargateClient: StargateClient | null = null;
-  private wsClient: WebsocketClient | null = null;
+  private wsClient: CometClient | null = null;
 
   private reconnectAttempts = 0;
   readonly reconnectDelayMs = 5000;
@@ -151,42 +153,53 @@ export class ChainClient {
   async subscribeToNewBlocks(
     onBlock: (block: IndexedBlock) => Promise<void>,
   ): Promise<void> {
-    console.info("Starting WebSocket subscription for new blocks...");
-
     const wsUrl = process.env.RPC_WS_SOCKET as string;
+    console.info("Starting WebSocket subscription...", wsUrl);
 
-    const wsClientInstance = new WebsocketClient(wsUrl, (error) => {
-      console.error("WebSocket error", { error });
-      this.resubscribe(onBlock);
-    });
+    return new Promise((_, reject) => {
+      const ws = new WebSocket(wsUrl);
 
-    this.wsClient = wsClientInstance;
-    const tmWsClient = await Tendermint37Client.create(wsClientInstance);
+      ws.onopen = () => {
+        console.log("WS connected, sending subscribe...");
+        ws.send(
+          JSON.stringify({
+            jsonrpc: "2.0",
+            method: "subscribe",
+            id: 1,
+            params: { query: "tm.event='NewBlock'" },
+          }),
+        );
+      };
 
-    const subscription = tmWsClient.subscribeNewBlock();
+      ws.onmessage = (msg) => {
+        void (async () => {
+          const data = JSON.parse(msg.data as string);
+          if (!data?.result?.data?.value?.block) return;
 
-    subscription.addListener({
-      next: async (event) => {
-        const height = event.header.height;
+          const height = Number(data.result.data.value.block.header.height);
+          console.log("New block:", height);
 
-        try {
-          const block = await this.getBlock(height);
-          await onBlock(block);
-        } catch (error) {
-          console.error(`Failed to process new block ${height}`, { error });
-        }
-      },
-      error: (error) => {
-        console.error("Block subscription error", { error });
+          try {
+            const block = await this.getBlock(height);
+            await onBlock(block);
+          } catch (error) {
+            console.error(`Failed to process block ${height}`, error);
+          }
+        })();
+      };
+
+      ws.onerror = (err) => {
+        console.error("WS error:", err);
+        reject(err);
         this.resubscribe(onBlock);
-      },
-      complete: () => {
-        console.warn("Block subscription completed unexpectedly");
-        this.resubscribe(onBlock);
-      },
-    });
+      };
 
-    console.info("WebSocket subscription active, listening for new blocks...");
+      ws.onclose = () => {
+        console.warn("WS closed, reconnecting...");
+        reject(new Error("WS closed"));
+        this.resubscribe(onBlock);
+      };
+    });
   }
 
   private async resubscribe(
