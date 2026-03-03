@@ -1,0 +1,7 @@
+const EVENT_TYPES = {
+  EVENT_CREATED: "CREATE_EVENT",
+  PARTICIPATE_EVENT: "PARTICIPATE_EVENT",
+  VALIDATE_EVENT: "VALIDATE_EVENT",
+} as const;
+
+export class EventParser {}

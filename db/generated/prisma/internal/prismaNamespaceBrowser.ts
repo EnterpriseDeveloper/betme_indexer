@@ -51,7 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  IndexerState: 'IndexerState'
+  IndexerState: 'IndexerState',
+  Event: 'Event',
+  Participant: 'Participant',
+  Validator: 'Validator'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -79,10 +82,63 @@ export const IndexerStateScalarFieldEnum = {
 export type IndexerStateScalarFieldEnum = (typeof IndexerStateScalarFieldEnum)[keyof typeof IndexerStateScalarFieldEnum]
 
 
+export const EventScalarFieldEnum = {
+  id: 'id',
+  creator: 'creator',
+  question: 'question',
+  answers: 'answers',
+  answersPool: 'answersPool',
+  endTime: 'endTime',
+  startTime: 'startTime',
+  category: 'category',
+  status: 'status',
+  participants: 'participants',
+  roomId: 'roomId',
+  createdAt: 'createdAt'
+} as const
+
+export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const ParticipantScalarFieldEnum = {
+  id: 'id',
+  creator: 'creator',
+  eventId: 'eventId',
+  answer: 'answer',
+  amount: 'amount',
+  token: 'token',
+  result: 'result',
+  createdAt: 'createdAt'
+} as const
+
+export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[keyof typeof ParticipantScalarFieldEnum]
+
+
+export const ValidatorScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  answer: 'answer',
+  source: 'source',
+  refunded: 'refunded',
+  companyAmount: 'companyAmount',
+  createdAt: 'createdAt'
+} as const
+
+export type ValidatorScalarFieldEnum = (typeof ValidatorScalarFieldEnum)[keyof typeof ValidatorScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 

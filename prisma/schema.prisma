@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../db/generated/prisma"
@@ -17,4 +11,49 @@ model IndexerState {
   id        Int      @id @default(1)
   lastBlock BigInt
   updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id           BigInt        @id
+  creator      String
+  question     String
+  answers      String[]
+  answersPool  BigInt[]
+  endTime      BigInt
+  startTime    BigInt
+  category     String
+  status       String
+  participants String[]
+  roomId       String
+  createdAt    DateTime      @default(now())
+  bets         Participant[]
+  validators   Validator[]
+}
+
+model Participant {
+  id        BigInt @id
+  creator   String
+  eventId   BigInt
+  answer    String
+  amount    BigInt
+  token     String
+  result    BigInt
+  createdAt BigInt
+  event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+  @@index([creator])
+}
+
+model Validator {
+  id            BigInt  @id
+  eventId       BigInt
+  answer        String
+  source        String
+  refunded      Boolean
+  companyAmount BigInt
+  createdAt     BigInt
+  event         Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
 }

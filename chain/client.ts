@@ -69,6 +69,13 @@ export class ChainClient {
   async getBlock(height: number): Promise<IndexedBlock> {
     this.ensureConnected();
 
+    const { earliest } = await this.getAvailableRange();
+
+    if (height < earliest) {
+      console.warn(`Adjusting height from ${height} to ${earliest}`);
+      height = earliest;
+    }
+
     try {
       const [block, blockResults] = await Promise.all([
         this.tmClient!.block(height),
@@ -139,6 +146,15 @@ export class ChainClient {
           ? attr.value
           : Buffer.from(attr.value).toString("utf8"),
     }));
+  }
+
+  async getAvailableRange() {
+    const status = await this.tmClient!.status();
+
+    return {
+      earliest: Number(status.syncInfo.earliestBlockHeight),
+      latest: Number(status.syncInfo.latestBlockHeight),
+    };
   }
 
   async getLatestHeight(): Promise<number> {

@@ -9,4 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/IndexerState'
+export type * from './models/Event'
+export type * from './models/Participant'
+export type * from './models/Validator'
 export type * from './commonInputTypes'

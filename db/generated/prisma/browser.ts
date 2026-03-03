@@ -22,3 +22,18 @@ export * from './enums';
  * 
  */
 export type IndexerState = Prisma.IndexerStateModel
+/**
+ * Model Event
+ * 
+ */
+export type Event = Prisma.EventModel
+/**
+ * Model Participant
+ * 
+ */
+export type Participant = Prisma.ParticipantModel
+/**
+ * Model Validator
+ * 
+ */
+export type Validator = Prisma.ValidatorModel
