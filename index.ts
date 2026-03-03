@@ -3,6 +3,9 @@ import "dotenv/config";
 import { ChainClient } from "./chain/client";
 import { BlockProcessor } from "./chain/blockProcessor";
 import { PrismaBlockRepository } from "./db/blockRepository";
+import { EventParser } from "./parser/parser";
+
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -10,17 +13,13 @@ app.get("/ping", (req, res) => {
   res.send({ status: "ok" });
 });
 
-app.listen(3000, async () => {
-  console.log("Server is running on http://localhost:3000");
+app.listen(port, async () => {
+  console.log(`Server is running on port: ${port}`);
 
   const blockRepository = new PrismaBlockRepository();
   const client = new ChainClient();
-  //const parser = new EventParser();
-  const processor = new BlockProcessor(
-    client,
-    // parser,
-    blockRepository,
-  );
+  const parser = new EventParser();
+  const processor = new BlockProcessor(client, parser, blockRepository);
 
   // Graceful shutdown
   process.on("SIGINT", async () => {
@@ -35,5 +34,5 @@ app.listen(3000, async () => {
   await processor.historicalSync();
 
   // 2. get all blocks
-  //await processor.realtimeSync();
+  await processor.realtimeSync();
 });

@@ -1,11 +1,12 @@
 import { ChainClient } from "./client";
 import { BlockRepository } from "../db/blockRepository";
 import { IndexedBlock } from "./interfaces";
+import { EventParser } from "../parser/parser";
 
 export class BlockProcessor {
   constructor(
     private readonly client: ChainClient,
-    // private readonly parser: EventParser,
+    private readonly parser: EventParser,
     private readonly repository: BlockRepository,
     private readonly batchSize: number = 100,
   ) {}
@@ -71,23 +72,21 @@ export class BlockProcessor {
   }
 
   private async processBlock(block: IndexedBlock): Promise<void> {
-    // const parsed = this.parser.parse(block.rawEvents);
-    console.log(JSON.stringify(block));
+    await this.parser.parse(block.rawEvents);
 
     const stats = {
       height: block.height,
       txCount: block.txCount,
-      // chainEvents: parsed.chainEvents.length,
-      // participants: parsed.participants.length,
-      // unknown: parsed.unknownEvents.length,
     };
 
-    console.debug("Processing block", stats);
-
     await this.repository.saveBlock(block);
+  }
 
-    // if (parsed.chainEvents.length > 0 || parsed.participants.length > 0) {
-    //   console.info("Block with events indexed", stats);
-    // }
+  async realtimeSync(): Promise<void> {
+    console.info("Starting real-time sync via WebSocket...");
+
+    await this.client.subscribeToNewBlocks(async (block) => {
+      await this.processBlock(block);
+    });
   }
 }

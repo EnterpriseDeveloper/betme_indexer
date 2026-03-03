@@ -11,7 +11,7 @@ import { IndexedBlock, RawEvent } from "./interfaces";
 export class ChainClient {
   private tmClient: Tendermint37Client | null = null;
   private stargateClient: StargateClient | null = null;
-  readonly wsClient: WebsocketClient | null = null;
+  private wsClient: WebsocketClient | null = null;
 
   private reconnectAttempts = 0;
   readonly reconnectDelayMs = 5000;
@@ -146,6 +146,61 @@ export class ChainClient {
           ? attr.value
           : Buffer.from(attr.value).toString("utf8"),
     }));
+  }
+
+  async subscribeToNewBlocks(
+    onBlock: (block: IndexedBlock) => Promise<void>,
+  ): Promise<void> {
+    console.info("Starting WebSocket subscription for new blocks...");
+
+    const wsUrl = process.env.RPC_WS_SOCKET as string;
+
+    const wsClientInstance = new WebsocketClient(wsUrl, (error) => {
+      console.error("WebSocket error", { error });
+      this.resubscribe(onBlock);
+    });
+
+    this.wsClient = wsClientInstance;
+    const tmWsClient = await Tendermint37Client.create(wsClientInstance);
+
+    const subscription = tmWsClient.subscribeNewBlock();
+
+    subscription.addListener({
+      next: async (event) => {
+        const height = event.header.height;
+
+        try {
+          const block = await this.getBlock(height);
+          await onBlock(block);
+        } catch (error) {
+          console.error(`Failed to process new block ${height}`, { error });
+        }
+      },
+      error: (error) => {
+        console.error("Block subscription error", { error });
+        this.resubscribe(onBlock);
+      },
+      complete: () => {
+        console.warn("Block subscription completed unexpectedly");
+        this.resubscribe(onBlock);
+      },
+    });
+
+    console.info("WebSocket subscription active, listening for new blocks...");
+  }
+
+  private async resubscribe(
+    onBlock: (block: IndexedBlock) => Promise<void>,
+  ): Promise<void> {
+    console.warn("Resubscribing to new blocks...");
+    await sleep(this.reconnectDelayMs);
+
+    try {
+      await this.subscribeToNewBlocks(onBlock);
+    } catch (error) {
+      console.error("Failed to resubscribe", { error });
+      await this.resubscribe(onBlock);
+    }
   }
 
   async getAvailableRange() {
