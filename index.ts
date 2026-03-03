@@ -1,4 +1,8 @@
 import express from "express";
+import "dotenv/config";
+import { ChainClient } from "./chain/client";
+import { BlockProcessor } from "./chain/blockProcessor";
+import { PrismaBlockRepository } from "./db/blockRepository";
 
 const app = express();
 
@@ -6,6 +10,30 @@ app.get("/ping", (req, res) => {
   res.send({ status: "ok" });
 });
 
-app.listen(3000, () => {
+app.listen(3000, async () => {
   console.log("Server is running on http://localhost:3000");
+
+  const blockRepository = new PrismaBlockRepository();
+  const client = new ChainClient();
+  //const parser = new EventParser();
+  const processor = new BlockProcessor(
+    client,
+    // parser,
+    blockRepository,
+  );
+
+  // Graceful shutdown
+  process.on("SIGINT", async () => {
+    console.info("Shutting down...");
+    await client.disconnect();
+    process.exit(0);
+  });
+
+  await client.connect();
+
+  // 1. Check history events
+  await processor.historicalSync();
+
+  // 2. get all blocks
+  //await processor.realtimeSync();
 });

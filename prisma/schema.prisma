@@ -6,9 +6,15 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../db/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model IndexerState {
+  id        Int      @id @default(1)
+  lastBlock BigInt
+  updatedAt DateTime @updatedAt
 }
