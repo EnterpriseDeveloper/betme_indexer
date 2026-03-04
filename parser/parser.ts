@@ -55,18 +55,20 @@ export class EventParser {
   private async parseEvent(raw: RawEvent) {
     console.log("CREATE_EVENT", JSON.stringify(raw));
     const payload = this.parseCreateEvent(raw.attributes);
-    this.eventDb.saveEvent(payload);
+    await this.eventDb.saveEvent(payload);
   }
 
   private async parseParticipant(raw: RawEvent) {
     console.log("PARTICIPATE_EVENT", JSON.stringify(raw));
     const payload = this.parseParticipateEvent(raw.attributes);
-    this.partDb.saveParticipant(payload);
+    await this.partDb.saveParticipant(payload);
   }
 
   private async parseValidation(raw: RawEvent) {
     console.log("VALIDATE_EVENT", JSON.stringify(raw));
     const payload = this.validateParserEvent(raw.attributes);
+    await this.validDB.saveParticipant(payload);
+    // TODO IMPORTANT:fetch participant and save info after validation
   }
 
   private parseCreateEvent(attributes: Attribute[]): CreateEventPayload {
