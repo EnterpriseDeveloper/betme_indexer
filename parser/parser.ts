@@ -3,40 +3,17 @@ import { EventRepository } from "../db/eventsRepository";
 import { PartRepository } from "../db/partRepository";
 import { EventEntity, ParticipantEntity } from "../db/types";
 import { ValRepository } from "../db/valRepository";
+import {
+  CreateEventPayload,
+  ParticipateEventPayload,
+  Attribute,
+} from "./types";
 
 const EVENT_TYPES = {
   EVENT_CREATED: "CREATE_EVENT",
   PARTICIPATE_EVENT: "PARTICIPATE_EVENT",
   VALIDATE_EVENT: "VALIDATE_EVENT",
 } as const;
-
-type Attribute = {
-  key: string;
-  value: string;
-};
-
-export interface CreateEventPayload {
-  id: bigint;
-  creator: string;
-  question: string;
-  answers: string[];
-  answersPool: bigint[];
-  startTime: bigint;
-  endTime: bigint;
-  category: string;
-  status: string;
-  roomId: string;
-}
-
-export interface ParticipateEventPayload {
-  id: bigint;
-  creator: string;
-  eventId: bigint;
-  answer: string;
-  amount: bigint;
-  token: string;
-  createdAt: bigint;
-}
 
 export class EventParser {
   constructor(

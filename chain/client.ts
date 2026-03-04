@@ -7,6 +7,7 @@ import {
 import { EventAttribute } from "@cosmjs/tendermint-rpc/build/comet1/responses";
 import { createHash } from "node:crypto";
 import { IndexedBlock, RawEvent } from "./interfaces";
+import WebSocket from "ws";
 
 export class ChainClient {
   private tmClient: Tendermint37Client | null = null;
