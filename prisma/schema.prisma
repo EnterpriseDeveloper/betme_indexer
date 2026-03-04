@@ -23,7 +23,6 @@ model Event {
   startTime    BigInt
   category     String
   status       String
-  participants String[]
   roomId       String
   createdAt    DateTime      @default(now())
   bets         Participant[]
@@ -47,6 +46,7 @@ model Participant {
 
 model Validator {
   id            BigInt  @id
+  creator       String
   eventId       BigInt
   answer        String
   source        String

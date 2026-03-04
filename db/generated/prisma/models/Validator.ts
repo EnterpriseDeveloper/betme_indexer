@@ -42,6 +42,7 @@ export type ValidatorSumAggregateOutputType = {
 
 export type ValidatorMinAggregateOutputType = {
   id: bigint | null
+  creator: string | null
   eventId: bigint | null
   answer: string | null
   source: string | null
@@ -52,6 +53,7 @@ export type ValidatorMinAggregateOutputType = {
 
 export type ValidatorMaxAggregateOutputType = {
   id: bigint | null
+  creator: string | null
   eventId: bigint | null
   answer: string | null
   source: string | null
@@ -62,6 +64,7 @@ export type ValidatorMaxAggregateOutputType = {
 
 export type ValidatorCountAggregateOutputType = {
   id: number
+  creator: number
   eventId: number
   answer: number
   source: number
@@ -88,6 +91,7 @@ export type ValidatorSumAggregateInputType = {
 
 export type ValidatorMinAggregateInputType = {
   id?: true
+  creator?: true
   eventId?: true
   answer?: true
   source?: true
@@ -98,6 +102,7 @@ export type ValidatorMinAggregateInputType = {
 
 export type ValidatorMaxAggregateInputType = {
   id?: true
+  creator?: true
   eventId?: true
   answer?: true
   source?: true
@@ -108,6 +113,7 @@ export type ValidatorMaxAggregateInputType = {
 
 export type ValidatorCountAggregateInputType = {
   id?: true
+  creator?: true
   eventId?: true
   answer?: true
   source?: true
@@ -205,6 +211,7 @@ export type ValidatorGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type ValidatorGroupByOutputType = {
   id: bigint
+  creator: string
   eventId: bigint
   answer: string
   source: string
@@ -238,6 +245,7 @@ export type ValidatorWhereInput = {
   OR?: Prisma.ValidatorWhereInput[]
   NOT?: Prisma.ValidatorWhereInput | Prisma.ValidatorWhereInput[]
   id?: Prisma.BigIntFilter<"Validator"> | bigint | number
+  creator?: Prisma.StringFilter<"Validator"> | string
   eventId?: Prisma.BigIntFilter<"Validator"> | bigint | number
   answer?: Prisma.StringFilter<"Validator"> | string
   source?: Prisma.StringFilter<"Validator"> | string
@@ -249,6 +257,7 @@ export type ValidatorWhereInput = {
 
 export type ValidatorOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   source?: Prisma.SortOrder
@@ -263,6 +272,7 @@ export type ValidatorWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ValidatorWhereInput | Prisma.ValidatorWhereInput[]
   OR?: Prisma.ValidatorWhereInput[]
   NOT?: Prisma.ValidatorWhereInput | Prisma.ValidatorWhereInput[]
+  creator?: Prisma.StringFilter<"Validator"> | string
   eventId?: Prisma.BigIntFilter<"Validator"> | bigint | number
   answer?: Prisma.StringFilter<"Validator"> | string
   source?: Prisma.StringFilter<"Validator"> | string
@@ -274,6 +284,7 @@ export type ValidatorWhereUniqueInput = Prisma.AtLeast<{
 
 export type ValidatorOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   source?: Prisma.SortOrder
@@ -292,6 +303,7 @@ export type ValidatorScalarWhereWithAggregatesInput = {
   OR?: Prisma.ValidatorScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ValidatorScalarWhereWithAggregatesInput | Prisma.ValidatorScalarWhereWithAggregatesInput[]
   id?: Prisma.BigIntWithAggregatesFilter<"Validator"> | bigint | number
+  creator?: Prisma.StringWithAggregatesFilter<"Validator"> | string
   eventId?: Prisma.BigIntWithAggregatesFilter<"Validator"> | bigint | number
   answer?: Prisma.StringWithAggregatesFilter<"Validator"> | string
   source?: Prisma.StringWithAggregatesFilter<"Validator"> | string
@@ -302,6 +314,7 @@ export type ValidatorScalarWhereWithAggregatesInput = {
 
 export type ValidatorCreateInput = {
   id: bigint | number
+  creator: string
   answer: string
   source: string
   refunded: boolean
@@ -312,6 +325,7 @@ export type ValidatorCreateInput = {
 
 export type ValidatorUncheckedCreateInput = {
   id: bigint | number
+  creator: string
   eventId: bigint | number
   answer: string
   source: string
@@ -322,6 +336,7 @@ export type ValidatorUncheckedCreateInput = {
 
 export type ValidatorUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   refunded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -332,6 +347,7 @@ export type ValidatorUpdateInput = {
 
 export type ValidatorUncheckedUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -342,6 +358,7 @@ export type ValidatorUncheckedUpdateInput = {
 
 export type ValidatorCreateManyInput = {
   id: bigint | number
+  creator: string
   eventId: bigint | number
   answer: string
   source: string
@@ -352,6 +369,7 @@ export type ValidatorCreateManyInput = {
 
 export type ValidatorUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   refunded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -361,6 +379,7 @@ export type ValidatorUpdateManyMutationInput = {
 
 export type ValidatorUncheckedUpdateManyInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -381,6 +400,7 @@ export type ValidatorOrderByRelationAggregateInput = {
 
 export type ValidatorCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   source?: Prisma.SortOrder
@@ -398,6 +418,7 @@ export type ValidatorAvgOrderByAggregateInput = {
 
 export type ValidatorMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   source?: Prisma.SortOrder
@@ -408,6 +429,7 @@ export type ValidatorMaxOrderByAggregateInput = {
 
 export type ValidatorMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   source?: Prisma.SortOrder
@@ -471,6 +493,7 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type ValidatorCreateWithoutEventInput = {
   id: bigint | number
+  creator: string
   answer: string
   source: string
   refunded: boolean
@@ -480,6 +503,7 @@ export type ValidatorCreateWithoutEventInput = {
 
 export type ValidatorUncheckedCreateWithoutEventInput = {
   id: bigint | number
+  creator: string
   answer: string
   source: string
   refunded: boolean
@@ -518,6 +542,7 @@ export type ValidatorScalarWhereInput = {
   OR?: Prisma.ValidatorScalarWhereInput[]
   NOT?: Prisma.ValidatorScalarWhereInput | Prisma.ValidatorScalarWhereInput[]
   id?: Prisma.BigIntFilter<"Validator"> | bigint | number
+  creator?: Prisma.StringFilter<"Validator"> | string
   eventId?: Prisma.BigIntFilter<"Validator"> | bigint | number
   answer?: Prisma.StringFilter<"Validator"> | string
   source?: Prisma.StringFilter<"Validator"> | string
@@ -528,6 +553,7 @@ export type ValidatorScalarWhereInput = {
 
 export type ValidatorCreateManyEventInput = {
   id: bigint | number
+  creator: string
   answer: string
   source: string
   refunded: boolean
@@ -537,6 +563,7 @@ export type ValidatorCreateManyEventInput = {
 
 export type ValidatorUpdateWithoutEventInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   refunded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -546,6 +573,7 @@ export type ValidatorUpdateWithoutEventInput = {
 
 export type ValidatorUncheckedUpdateWithoutEventInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   refunded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -555,6 +583,7 @@ export type ValidatorUncheckedUpdateWithoutEventInput = {
 
 export type ValidatorUncheckedUpdateManyWithoutEventInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   refunded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -566,6 +595,7 @@ export type ValidatorUncheckedUpdateManyWithoutEventInput = {
 
 export type ValidatorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  creator?: boolean
   eventId?: boolean
   answer?: boolean
   source?: boolean
@@ -577,6 +607,7 @@ export type ValidatorSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type ValidatorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  creator?: boolean
   eventId?: boolean
   answer?: boolean
   source?: boolean
@@ -588,6 +619,7 @@ export type ValidatorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type ValidatorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  creator?: boolean
   eventId?: boolean
   answer?: boolean
   source?: boolean
@@ -599,6 +631,7 @@ export type ValidatorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type ValidatorSelectScalar = {
   id?: boolean
+  creator?: boolean
   eventId?: boolean
   answer?: boolean
   source?: boolean
@@ -607,7 +640,7 @@ export type ValidatorSelectScalar = {
   createdAt?: boolean
 }
 
-export type ValidatorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "answer" | "source" | "refunded" | "companyAmount" | "createdAt", ExtArgs["result"]["validator"]>
+export type ValidatorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creator" | "eventId" | "answer" | "source" | "refunded" | "companyAmount" | "createdAt", ExtArgs["result"]["validator"]>
 export type ValidatorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }
@@ -625,6 +658,7 @@ export type $ValidatorPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
+    creator: string
     eventId: bigint
     answer: string
     source: string
@@ -1056,6 +1090,7 @@ export interface Prisma__ValidatorClient<T, Null = never, ExtArgs extends runtim
  */
 export interface ValidatorFieldRefs {
   readonly id: Prisma.FieldRef<"Validator", 'BigInt'>
+  readonly creator: Prisma.FieldRef<"Validator", 'String'>
   readonly eventId: Prisma.FieldRef<"Validator", 'BigInt'>
   readonly answer: Prisma.FieldRef<"Validator", 'String'>
   readonly source: Prisma.FieldRef<"Validator", 'String'>

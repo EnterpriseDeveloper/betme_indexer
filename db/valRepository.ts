@@ -1,6 +1,6 @@
 import { PrismaClient } from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { ValidatorEntity } from "./types";
+import { ValidateEventPayload } from "../parser/types";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -9,12 +9,22 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({ adapter });
 
 export interface ValRepository {
-  saveParticipant(event: ValidatorEntity): Promise<void>;
+  saveParticipant(event: ValidateEventPayload): Promise<void>;
 }
 
 export class ValPrismaRepository implements ValRepository {
-  async saveParticipant(event: ValidatorEntity): Promise<void> {
-    // TODO
-    await prisma.validator.create({ data: event });
+  async saveParticipant(payload: ValidateEventPayload): Promise<void> {
+    await prisma.validator.create({
+      data: {
+        id: payload.id,
+        creator: payload.creator,
+        eventId: payload.eventId,
+        answer: payload.answer,
+        source: payload.source,
+        createdAt: payload.createdAt,
+        refunded: payload.refunded,
+        companyAmount: payload.companyFee,
+      },
+    });
   }
 }

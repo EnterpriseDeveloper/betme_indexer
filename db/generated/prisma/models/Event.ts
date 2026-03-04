@@ -74,7 +74,6 @@ export type EventCountAggregateOutputType = {
   startTime: number
   category: number
   status: number
-  participants: number
   roomId: number
   createdAt: number
   _all: number
@@ -129,7 +128,6 @@ export type EventCountAggregateInputType = {
   startTime?: true
   category?: true
   status?: true
-  participants?: true
   roomId?: true
   createdAt?: true
   _all?: true
@@ -231,7 +229,6 @@ export type EventGroupByOutputType = {
   startTime: bigint
   category: string
   status: string
-  participants: string[]
   roomId: string
   createdAt: Date
   _count: EventCountAggregateOutputType | null
@@ -269,7 +266,6 @@ export type EventWhereInput = {
   startTime?: Prisma.BigIntFilter<"Event"> | bigint | number
   category?: Prisma.StringFilter<"Event"> | string
   status?: Prisma.StringFilter<"Event"> | string
-  participants?: Prisma.StringNullableListFilter<"Event">
   roomId?: Prisma.StringFilter<"Event"> | string
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   bets?: Prisma.ParticipantListRelationFilter
@@ -286,7 +282,6 @@ export type EventOrderByWithRelationInput = {
   startTime?: Prisma.SortOrder
   category?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  participants?: Prisma.SortOrder
   roomId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   bets?: Prisma.ParticipantOrderByRelationAggregateInput
@@ -306,7 +301,6 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   startTime?: Prisma.BigIntFilter<"Event"> | bigint | number
   category?: Prisma.StringFilter<"Event"> | string
   status?: Prisma.StringFilter<"Event"> | string
-  participants?: Prisma.StringNullableListFilter<"Event">
   roomId?: Prisma.StringFilter<"Event"> | string
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   bets?: Prisma.ParticipantListRelationFilter
@@ -323,7 +317,6 @@ export type EventOrderByWithAggregationInput = {
   startTime?: Prisma.SortOrder
   category?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  participants?: Prisma.SortOrder
   roomId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.EventCountOrderByAggregateInput
@@ -346,7 +339,6 @@ export type EventScalarWhereWithAggregatesInput = {
   startTime?: Prisma.BigIntWithAggregatesFilter<"Event"> | bigint | number
   category?: Prisma.StringWithAggregatesFilter<"Event"> | string
   status?: Prisma.StringWithAggregatesFilter<"Event"> | string
-  participants?: Prisma.StringNullableListFilter<"Event">
   roomId?: Prisma.StringWithAggregatesFilter<"Event"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
 }
@@ -361,7 +353,6 @@ export type EventCreateInput = {
   startTime: bigint | number
   category: string
   status: string
-  participants?: Prisma.EventCreateparticipantsInput | string[]
   roomId: string
   createdAt?: Date | string
   bets?: Prisma.ParticipantCreateNestedManyWithoutEventInput
@@ -378,7 +369,6 @@ export type EventUncheckedCreateInput = {
   startTime: bigint | number
   category: string
   status: string
-  participants?: Prisma.EventCreateparticipantsInput | string[]
   roomId: string
   createdAt?: Date | string
   bets?: Prisma.ParticipantUncheckedCreateNestedManyWithoutEventInput
@@ -395,7 +385,6 @@ export type EventUpdateInput = {
   startTime?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   category?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  participants?: Prisma.EventUpdateparticipantsInput | string[]
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bets?: Prisma.ParticipantUpdateManyWithoutEventNestedInput
@@ -412,7 +401,6 @@ export type EventUncheckedUpdateInput = {
   startTime?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   category?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  participants?: Prisma.EventUpdateparticipantsInput | string[]
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bets?: Prisma.ParticipantUncheckedUpdateManyWithoutEventNestedInput
@@ -429,7 +417,6 @@ export type EventCreateManyInput = {
   startTime: bigint | number
   category: string
   status: string
-  participants?: Prisma.EventCreateparticipantsInput | string[]
   roomId: string
   createdAt?: Date | string
 }
@@ -444,7 +431,6 @@ export type EventUpdateManyMutationInput = {
   startTime?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   category?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  participants?: Prisma.EventUpdateparticipantsInput | string[]
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -459,7 +445,6 @@ export type EventUncheckedUpdateManyInput = {
   startTime?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   category?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  participants?: Prisma.EventUpdateparticipantsInput | string[]
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -490,7 +475,6 @@ export type EventCountOrderByAggregateInput = {
   startTime?: Prisma.SortOrder
   category?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  participants?: Prisma.SortOrder
   roomId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -546,10 +530,6 @@ export type EventCreateanswersPoolInput = {
   set: bigint[] | number[]
 }
 
-export type EventCreateparticipantsInput = {
-  set: string[]
-}
-
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -562,11 +542,6 @@ export type EventUpdateanswersInput = {
 export type EventUpdateanswersPoolInput = {
   set?: bigint[] | number[]
   push?: bigint | number | bigint[] | number[]
-}
-
-export type EventUpdateparticipantsInput = {
-  set?: string[]
-  push?: string | string[]
 }
 
 export type EventCreateNestedOneWithoutBetsInput = {
@@ -607,7 +582,6 @@ export type EventCreateWithoutBetsInput = {
   startTime: bigint | number
   category: string
   status: string
-  participants?: Prisma.EventCreateparticipantsInput | string[]
   roomId: string
   createdAt?: Date | string
   validators?: Prisma.ValidatorCreateNestedManyWithoutEventInput
@@ -623,7 +597,6 @@ export type EventUncheckedCreateWithoutBetsInput = {
   startTime: bigint | number
   category: string
   status: string
-  participants?: Prisma.EventCreateparticipantsInput | string[]
   roomId: string
   createdAt?: Date | string
   validators?: Prisma.ValidatorUncheckedCreateNestedManyWithoutEventInput
@@ -655,7 +628,6 @@ export type EventUpdateWithoutBetsInput = {
   startTime?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   category?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  participants?: Prisma.EventUpdateparticipantsInput | string[]
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validators?: Prisma.ValidatorUpdateManyWithoutEventNestedInput
@@ -671,7 +643,6 @@ export type EventUncheckedUpdateWithoutBetsInput = {
   startTime?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   category?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  participants?: Prisma.EventUpdateparticipantsInput | string[]
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validators?: Prisma.ValidatorUncheckedUpdateManyWithoutEventNestedInput
@@ -687,7 +658,6 @@ export type EventCreateWithoutValidatorsInput = {
   startTime: bigint | number
   category: string
   status: string
-  participants?: Prisma.EventCreateparticipantsInput | string[]
   roomId: string
   createdAt?: Date | string
   bets?: Prisma.ParticipantCreateNestedManyWithoutEventInput
@@ -703,7 +673,6 @@ export type EventUncheckedCreateWithoutValidatorsInput = {
   startTime: bigint | number
   category: string
   status: string
-  participants?: Prisma.EventCreateparticipantsInput | string[]
   roomId: string
   createdAt?: Date | string
   bets?: Prisma.ParticipantUncheckedCreateNestedManyWithoutEventInput
@@ -735,7 +704,6 @@ export type EventUpdateWithoutValidatorsInput = {
   startTime?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   category?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  participants?: Prisma.EventUpdateparticipantsInput | string[]
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bets?: Prisma.ParticipantUpdateManyWithoutEventNestedInput
@@ -751,7 +719,6 @@ export type EventUncheckedUpdateWithoutValidatorsInput = {
   startTime?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   category?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  participants?: Prisma.EventUpdateparticipantsInput | string[]
   roomId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bets?: Prisma.ParticipantUncheckedUpdateManyWithoutEventNestedInput
@@ -807,7 +774,6 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   startTime?: boolean
   category?: boolean
   status?: boolean
-  participants?: boolean
   roomId?: boolean
   createdAt?: boolean
   bets?: boolean | Prisma.Event$betsArgs<ExtArgs>
@@ -825,7 +791,6 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   startTime?: boolean
   category?: boolean
   status?: boolean
-  participants?: boolean
   roomId?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["event"]>
@@ -840,7 +805,6 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   startTime?: boolean
   category?: boolean
   status?: boolean
-  participants?: boolean
   roomId?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["event"]>
@@ -855,12 +819,11 @@ export type EventSelectScalar = {
   startTime?: boolean
   category?: boolean
   status?: boolean
-  participants?: boolean
   roomId?: boolean
   createdAt?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creator" | "question" | "answers" | "answersPool" | "endTime" | "startTime" | "category" | "status" | "participants" | "roomId" | "createdAt", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creator" | "question" | "answers" | "answersPool" | "endTime" | "startTime" | "category" | "status" | "roomId" | "createdAt", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bets?: boolean | Prisma.Event$betsArgs<ExtArgs>
   validators?: boolean | Prisma.Event$validatorsArgs<ExtArgs>
@@ -885,7 +848,6 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     startTime: bigint
     category: string
     status: string
-    participants: string[]
     roomId: string
     createdAt: Date
   }, ExtArgs["result"]["event"]>
@@ -1322,7 +1284,6 @@ export interface EventFieldRefs {
   readonly startTime: Prisma.FieldRef<"Event", 'BigInt'>
   readonly category: Prisma.FieldRef<"Event", 'String'>
   readonly status: Prisma.FieldRef<"Event", 'String'>
-  readonly participants: Prisma.FieldRef<"Event", 'String[]'>
   readonly roomId: Prisma.FieldRef<"Event", 'String'>
   readonly createdAt: Prisma.FieldRef<"Event", 'DateTime'>
 }

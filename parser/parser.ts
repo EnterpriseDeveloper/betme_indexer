@@ -1,12 +1,12 @@
 import { RawEvent } from "../chain/interfaces";
 import { EventRepository } from "../db/eventsRepository";
 import { PartRepository } from "../db/partRepository";
-import { EventEntity, ParticipantEntity } from "../db/types";
 import { ValRepository } from "../db/valRepository";
 import {
   CreateEventPayload,
   ParticipateEventPayload,
   Attribute,
+  ValidateEventPayload,
 } from "./types";
 
 const EVENT_TYPES = {
@@ -38,7 +38,10 @@ export class EventParser {
             break;
 
           default:
-            console.warn("UNKNOWN EVENT", { type: raw.type, event: raw });
+            console.warn("UNKNOWN EVENT", {
+              type: raw.type,
+              event: JSON.stringify(raw.attributes),
+            });
             break;
         }
       } catch (error) {
@@ -50,42 +53,20 @@ export class EventParser {
   }
 
   private async parseEvent(raw: RawEvent) {
+    console.log("CREATE_EVENT", JSON.stringify(raw));
     const payload = this.parseCreateEvent(raw.attributes);
-    const eventEntity: EventEntity = {
-      id: payload.id,
-      creator: payload.creator,
-      question: payload.question,
-      answers: payload.answers,
-      answersPool: payload.answersPool,
-      startTime: payload.startTime,
-      endTime: payload.endTime,
-      category: payload.category,
-      status: payload.status,
-      participants: [],
-      roomId: payload.roomId,
-      createdAt: new Date(),
-    };
-    this.eventDb.saveEvent(eventEntity);
+    this.eventDb.saveEvent(payload);
   }
 
   private async parseParticipant(raw: RawEvent) {
-    console.log("PARTICIPATE_EVENT", raw);
+    console.log("PARTICIPATE_EVENT", JSON.stringify(raw));
     const payload = this.parseParticipateEvent(raw.attributes);
-    const partEvent: ParticipantEntity = {
-      id: payload.id,
-      creator: payload.creator,
-      eventId: payload.eventId,
-      answer: payload.answer,
-      amount: payload.amount,
-      token: payload.token,
-      result: BigInt(0),
-      createdAt: payload.createdAt,
-    };
-    this.partDb.saveParticipant(partEvent);
+    this.partDb.saveParticipant(payload);
   }
 
   private async parseValidation(raw: RawEvent) {
-    console.log("VALIDATE_EVENT", raw);
+    console.log("VALIDATE_EVENT", JSON.stringify(raw));
+    const payload = this.validateParserEvent(raw.attributes);
   }
 
   private parseCreateEvent(attributes: Attribute[]): CreateEventPayload {
@@ -119,6 +100,21 @@ export class EventParser {
       amount: BigInt(obj.amount),
       token: obj.token,
       createdAt: BigInt(obj.createdAt),
+    };
+  }
+
+  private validateParserEvent(attributes: Attribute[]): ValidateEventPayload {
+    const obj = Object.fromEntries(attributes.map((a) => [a.key, a.value]));
+
+    return {
+      id: BigInt(obj.id),
+      creator: obj.creator,
+      eventId: BigInt(obj.eventId),
+      answer: obj.answer,
+      source: obj.source,
+      createdAt: BigInt(obj.createdAt),
+      refunded: obj.refunded === "true",
+      companyFee: BigInt(obj.companyFee),
     };
   }
 }

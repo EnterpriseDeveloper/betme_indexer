@@ -25,3 +25,14 @@ export interface ParticipateEventPayload {
   token: string;
   createdAt: bigint;
 }
+
+export interface ValidateEventPayload {
+  id: bigint;
+  creator: string;
+  eventId: bigint;
+  answer: string;
+  source: string;
+  createdAt: bigint;
+  refunded: boolean;
+  companyFee: bigint;
+}

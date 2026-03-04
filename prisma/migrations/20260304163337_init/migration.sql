@@ -1,4 +1,13 @@
 -- CreateTable
+CREATE TABLE "IndexerState" (
+    "id" INTEGER NOT NULL DEFAULT 1,
+    "lastBlock" BIGINT NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "IndexerState_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Event" (
     "id" BIGINT NOT NULL,
     "creator" TEXT NOT NULL,
@@ -9,7 +18,6 @@ CREATE TABLE "Event" (
     "startTime" BIGINT NOT NULL,
     "category" TEXT NOT NULL,
     "status" TEXT NOT NULL,
-    "participants" TEXT[],
     "roomId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -33,6 +41,7 @@ CREATE TABLE "Participant" (
 -- CreateTable
 CREATE TABLE "Validator" (
     "id" BIGINT NOT NULL,
+    "creator" TEXT NOT NULL,
     "eventId" BIGINT NOT NULL,
     "answer" TEXT NOT NULL,
     "source" TEXT NOT NULL,

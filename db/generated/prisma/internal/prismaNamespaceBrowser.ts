@@ -92,7 +92,6 @@ export const EventScalarFieldEnum = {
   startTime: 'startTime',
   category: 'category',
   status: 'status',
-  participants: 'participants',
   roomId: 'roomId',
   createdAt: 'createdAt'
 } as const
@@ -116,6 +115,7 @@ export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[key
 
 export const ValidatorScalarFieldEnum = {
   id: 'id',
+  creator: 'creator',
   eventId: 'eventId',
   answer: 'answer',
   source: 'source',
