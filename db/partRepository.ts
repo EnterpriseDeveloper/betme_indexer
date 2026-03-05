@@ -75,8 +75,6 @@ export class PartPrismaRepository implements PartRepository {
           where: { eventId: eventId },
         });
 
-        console.log("Participants:", participants);
-
         for (const participant of participants) {
           let part = await getParticipantByID(Number(participant.id));
           if (part) {
