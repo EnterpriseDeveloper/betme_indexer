@@ -50,6 +50,7 @@ export type ParticipantMinAggregateOutputType = {
   amount: bigint | null
   token: string | null
   result: bigint | null
+  status: string | null
   createdAt: bigint | null
 }
 
@@ -61,6 +62,7 @@ export type ParticipantMaxAggregateOutputType = {
   amount: bigint | null
   token: string | null
   result: bigint | null
+  status: string | null
   createdAt: bigint | null
 }
 
@@ -72,6 +74,7 @@ export type ParticipantCountAggregateOutputType = {
   amount: number
   token: number
   result: number
+  status: number
   createdAt: number
   _all: number
 }
@@ -101,6 +104,7 @@ export type ParticipantMinAggregateInputType = {
   amount?: true
   token?: true
   result?: true
+  status?: true
   createdAt?: true
 }
 
@@ -112,6 +116,7 @@ export type ParticipantMaxAggregateInputType = {
   amount?: true
   token?: true
   result?: true
+  status?: true
   createdAt?: true
 }
 
@@ -123,6 +128,7 @@ export type ParticipantCountAggregateInputType = {
   amount?: true
   token?: true
   result?: true
+  status?: true
   createdAt?: true
   _all?: true
 }
@@ -221,6 +227,7 @@ export type ParticipantGroupByOutputType = {
   amount: bigint
   token: string
   result: bigint
+  status: string
   createdAt: bigint
   _count: ParticipantCountAggregateOutputType | null
   _avg: ParticipantAvgAggregateOutputType | null
@@ -255,6 +262,7 @@ export type ParticipantWhereInput = {
   amount?: Prisma.BigIntFilter<"Participant"> | bigint | number
   token?: Prisma.StringFilter<"Participant"> | string
   result?: Prisma.BigIntFilter<"Participant"> | bigint | number
+  status?: Prisma.StringFilter<"Participant"> | string
   createdAt?: Prisma.BigIntFilter<"Participant"> | bigint | number
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
 }
@@ -267,6 +275,7 @@ export type ParticipantOrderByWithRelationInput = {
   amount?: Prisma.SortOrder
   token?: Prisma.SortOrder
   result?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   event?: Prisma.EventOrderByWithRelationInput
 }
@@ -282,6 +291,7 @@ export type ParticipantWhereUniqueInput = Prisma.AtLeast<{
   amount?: Prisma.BigIntFilter<"Participant"> | bigint | number
   token?: Prisma.StringFilter<"Participant"> | string
   result?: Prisma.BigIntFilter<"Participant"> | bigint | number
+  status?: Prisma.StringFilter<"Participant"> | string
   createdAt?: Prisma.BigIntFilter<"Participant"> | bigint | number
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
 }, "id">
@@ -294,6 +304,7 @@ export type ParticipantOrderByWithAggregationInput = {
   amount?: Prisma.SortOrder
   token?: Prisma.SortOrder
   result?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ParticipantCountOrderByAggregateInput
   _avg?: Prisma.ParticipantAvgOrderByAggregateInput
@@ -313,6 +324,7 @@ export type ParticipantScalarWhereWithAggregatesInput = {
   amount?: Prisma.BigIntWithAggregatesFilter<"Participant"> | bigint | number
   token?: Prisma.StringWithAggregatesFilter<"Participant"> | string
   result?: Prisma.BigIntWithAggregatesFilter<"Participant"> | bigint | number
+  status?: Prisma.StringWithAggregatesFilter<"Participant"> | string
   createdAt?: Prisma.BigIntWithAggregatesFilter<"Participant"> | bigint | number
 }
 
@@ -323,6 +335,7 @@ export type ParticipantCreateInput = {
   amount: bigint | number
   token: string
   result: bigint | number
+  status: string
   createdAt: bigint | number
   event: Prisma.EventCreateNestedOneWithoutBetsInput
 }
@@ -335,6 +348,7 @@ export type ParticipantUncheckedCreateInput = {
   amount: bigint | number
   token: string
   result: bigint | number
+  status: string
   createdAt: bigint | number
 }
 
@@ -345,6 +359,7 @@ export type ParticipantUpdateInput = {
   amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   token?: Prisma.StringFieldUpdateOperationsInput | string
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   event?: Prisma.EventUpdateOneRequiredWithoutBetsNestedInput
 }
@@ -357,6 +372,7 @@ export type ParticipantUncheckedUpdateInput = {
   amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   token?: Prisma.StringFieldUpdateOperationsInput | string
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
@@ -368,6 +384,7 @@ export type ParticipantCreateManyInput = {
   amount: bigint | number
   token: string
   result: bigint | number
+  status: string
   createdAt: bigint | number
 }
 
@@ -378,6 +395,7 @@ export type ParticipantUpdateManyMutationInput = {
   amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   token?: Prisma.StringFieldUpdateOperationsInput | string
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
@@ -389,6 +407,7 @@ export type ParticipantUncheckedUpdateManyInput = {
   amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   token?: Prisma.StringFieldUpdateOperationsInput | string
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
@@ -410,6 +429,7 @@ export type ParticipantCountOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   token?: Prisma.SortOrder
   result?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -429,6 +449,7 @@ export type ParticipantMaxOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   token?: Prisma.SortOrder
   result?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -440,6 +461,7 @@ export type ParticipantMinOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   token?: Prisma.SortOrder
   result?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -500,6 +522,7 @@ export type ParticipantCreateWithoutEventInput = {
   amount: bigint | number
   token: string
   result: bigint | number
+  status: string
   createdAt: bigint | number
 }
 
@@ -510,6 +533,7 @@ export type ParticipantUncheckedCreateWithoutEventInput = {
   amount: bigint | number
   token: string
   result: bigint | number
+  status: string
   createdAt: bigint | number
 }
 
@@ -550,6 +574,7 @@ export type ParticipantScalarWhereInput = {
   amount?: Prisma.BigIntFilter<"Participant"> | bigint | number
   token?: Prisma.StringFilter<"Participant"> | string
   result?: Prisma.BigIntFilter<"Participant"> | bigint | number
+  status?: Prisma.StringFilter<"Participant"> | string
   createdAt?: Prisma.BigIntFilter<"Participant"> | bigint | number
 }
 
@@ -560,6 +585,7 @@ export type ParticipantCreateManyEventInput = {
   amount: bigint | number
   token: string
   result: bigint | number
+  status: string
   createdAt: bigint | number
 }
 
@@ -570,6 +596,7 @@ export type ParticipantUpdateWithoutEventInput = {
   amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   token?: Prisma.StringFieldUpdateOperationsInput | string
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
@@ -580,6 +607,7 @@ export type ParticipantUncheckedUpdateWithoutEventInput = {
   amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   token?: Prisma.StringFieldUpdateOperationsInput | string
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
@@ -590,6 +618,7 @@ export type ParticipantUncheckedUpdateManyWithoutEventInput = {
   amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   token?: Prisma.StringFieldUpdateOperationsInput | string
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
@@ -603,6 +632,7 @@ export type ParticipantSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   amount?: boolean
   token?: boolean
   result?: boolean
+  status?: boolean
   createdAt?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["participant"]>
@@ -615,6 +645,7 @@ export type ParticipantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   amount?: boolean
   token?: boolean
   result?: boolean
+  status?: boolean
   createdAt?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["participant"]>
@@ -627,6 +658,7 @@ export type ParticipantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   amount?: boolean
   token?: boolean
   result?: boolean
+  status?: boolean
   createdAt?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["participant"]>
@@ -639,10 +671,11 @@ export type ParticipantSelectScalar = {
   amount?: boolean
   token?: boolean
   result?: boolean
+  status?: boolean
   createdAt?: boolean
 }
 
-export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creator" | "eventId" | "answer" | "amount" | "token" | "result" | "createdAt", ExtArgs["result"]["participant"]>
+export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creator" | "eventId" | "answer" | "amount" | "token" | "result" | "status" | "createdAt", ExtArgs["result"]["participant"]>
 export type ParticipantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }
@@ -666,6 +699,7 @@ export type $ParticipantPayload<ExtArgs extends runtime.Types.Extensions.Interna
     amount: bigint
     token: string
     result: bigint
+    status: string
     createdAt: bigint
   }, ExtArgs["result"]["participant"]>
   composites: {}
@@ -1098,6 +1132,7 @@ export interface ParticipantFieldRefs {
   readonly amount: Prisma.FieldRef<"Participant", 'BigInt'>
   readonly token: Prisma.FieldRef<"Participant", 'String'>
   readonly result: Prisma.FieldRef<"Participant", 'BigInt'>
+  readonly status: Prisma.FieldRef<"Participant", 'String'>
   readonly createdAt: Prisma.FieldRef<"Participant", 'BigInt'>
 }
     

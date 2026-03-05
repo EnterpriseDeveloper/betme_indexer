@@ -33,7 +33,7 @@ app.listen(port, async () => {
   const blockRepository = new PrismaBlockRepository();
   const processor = new BlockProcessor(client, parser, blockRepository);
 
-  // Graceful shutdown
+  //Graceful shutdown
   process.on("SIGINT", async () => {
     console.info("Shutting down...");
     await client.disconnect();

@@ -33,6 +33,7 @@ CREATE TABLE "Participant" (
     "amount" BIGINT NOT NULL,
     "token" TEXT NOT NULL,
     "result" BIGINT NOT NULL,
+    "status" TEXT NOT NULL,
     "createdAt" BIGINT NOT NULL,
 
     CONSTRAINT "Participant_pkey" PRIMARY KEY ("id")

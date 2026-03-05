@@ -37,12 +37,12 @@ export class EventParser {
             await this.parseValidation(raw);
             break;
 
-          default:
-            console.warn("UNKNOWN EVENT", {
-              type: raw.type,
-              event: JSON.stringify(raw.attributes),
-            });
-            break;
+          // default:
+          //   console.warn("UNKNOWN EVENT", {
+          //     type: raw.type,
+          //     event: JSON.stringify(raw.attributes),
+          //   });
+          //   break;
         }
       } catch (error) {
         console.warn("Failed to parse event", { type: raw.type, error });
@@ -68,7 +68,10 @@ export class EventParser {
     console.log("VALIDATE_EVENT", JSON.stringify(raw));
     const payload = this.validateParserEvent(raw.attributes);
     await this.validDB.saveValidation(payload);
-    // TODO IMPORTANT:fetch participant and save info after validation
+    await this.partDb.updateParticipantFromValidator(
+      Number(payload.eventId),
+      payload.refunded,
+    );
   }
 
   private parseCreateEvent(attributes: Attribute[]): CreateEventPayload {

@@ -776,6 +776,7 @@ export const ParticipantScalarFieldEnum = {
   amount: 'amount',
   token: 'token',
   result: 'result',
+  status: 'status',
   createdAt: 'createdAt'
 } as const
 

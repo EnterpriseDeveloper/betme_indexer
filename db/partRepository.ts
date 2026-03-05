@@ -2,6 +2,7 @@ import { PrismaClient } from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { ParticipateEventPayload } from "../parser/types";
 import getParticipantByID from "../cosmos/cosmos";
+import { EventStatus } from "./types";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -11,7 +12,10 @@ const prisma = new PrismaClient({ adapter });
 
 export interface PartRepository {
   saveParticipant(event: ParticipateEventPayload): Promise<void>;
-  updateParticipantFromValidator(eventId: number): Promise<void>;
+  updateParticipantFromValidator(
+    eventId: number,
+    refunded: boolean,
+  ): Promise<void>;
 }
 
 export class PartPrismaRepository implements PartRepository {
@@ -26,6 +30,7 @@ export class PartPrismaRepository implements PartRepository {
             answer: payload.answer,
             amount: payload.amount,
             token: payload.token,
+            status: EventStatus.PENDING,
             result: BigInt(0),
             createdAt: payload.createdAt,
           },
@@ -60,7 +65,10 @@ export class PartPrismaRepository implements PartRepository {
     }
   }
 
-  async updateParticipantFromValidator(eventId: number): Promise<void> {
+  async updateParticipantFromValidator(
+    eventId: number,
+    refunded: boolean,
+  ): Promise<void> {
     try {
       await prisma.$transaction(async (tx) => {
         const participants = await tx.participant.findMany({
@@ -71,13 +79,17 @@ export class PartPrismaRepository implements PartRepository {
 
         for (const participant of participants) {
           let part = await getParticipantByID(Number(participant.id));
-          console.log(part);
-          // await tx.participant.update({
-          //   where: { id: eventId },
-          //   data: {
-          //     answersPool: pool,
-          //   },
-          // });
+          if (part) {
+            await tx.participant.update({
+              where: { id: eventId },
+              data: {
+                result: part.result,
+                status: refunded ? EventStatus.REFUNDED : EventStatus.FINISHED,
+              },
+            });
+          } else {
+            console.warn("Participant not found");
+          }
         }
       });
     } catch (e) {

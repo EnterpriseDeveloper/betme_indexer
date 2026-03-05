@@ -37,6 +37,7 @@ model Participant {
   amount    BigInt
   token     String
   result    BigInt
+  status    String
   createdAt BigInt
   event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
