@@ -67,7 +67,7 @@ export class EventParser {
   private async parseValidation(raw: RawEvent) {
     console.log("VALIDATE_EVENT", JSON.stringify(raw));
     const payload = this.validateParserEvent(raw.attributes);
-    await this.validDB.saveParticipant(payload);
+    await this.validDB.saveValidation(payload);
     // TODO IMPORTANT:fetch participant and save info after validation
   }
 
