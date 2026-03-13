@@ -387,7 +387,9 @@ export const ModelName = {
   IndexerState: 'IndexerState',
   Event: 'Event',
   Participant: 'Participant',
-  Validator: 'Validator'
+  Validator: 'Validator',
+  Withdrawal: 'Withdrawal',
+  Deposit: 'Deposit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "indexerState" | "event" | "participant" | "validator"
+    modelProps: "indexerState" | "event" | "participant" | "validator" | "withdrawal" | "deposit"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +705,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Withdrawal: {
+      payload: Prisma.$WithdrawalPayload<ExtArgs>
+      fields: Prisma.WithdrawalFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WithdrawalFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WithdrawalFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+        }
+        findFirst: {
+          args: Prisma.WithdrawalFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WithdrawalFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+        }
+        findMany: {
+          args: Prisma.WithdrawalFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload>[]
+        }
+        create: {
+          args: Prisma.WithdrawalCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+        }
+        createMany: {
+          args: Prisma.WithdrawalCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WithdrawalCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload>[]
+        }
+        delete: {
+          args: Prisma.WithdrawalDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+        }
+        update: {
+          args: Prisma.WithdrawalUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+        }
+        deleteMany: {
+          args: Prisma.WithdrawalDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WithdrawalUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WithdrawalUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload>[]
+        }
+        upsert: {
+          args: Prisma.WithdrawalUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalPayload>
+        }
+        aggregate: {
+          args: Prisma.WithdrawalAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWithdrawal>
+        }
+        groupBy: {
+          args: Prisma.WithdrawalGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WithdrawalGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WithdrawalCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WithdrawalCountAggregateOutputType> | number
+        }
+      }
+    }
+    Deposit: {
+      payload: Prisma.$DepositPayload<ExtArgs>
+      fields: Prisma.DepositFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DepositFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DepositFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload>
+        }
+        findFirst: {
+          args: Prisma.DepositFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DepositFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload>
+        }
+        findMany: {
+          args: Prisma.DepositFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload>[]
+        }
+        create: {
+          args: Prisma.DepositCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload>
+        }
+        createMany: {
+          args: Prisma.DepositCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DepositCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload>[]
+        }
+        delete: {
+          args: Prisma.DepositDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload>
+        }
+        update: {
+          args: Prisma.DepositUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload>
+        }
+        deleteMany: {
+          args: Prisma.DepositDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DepositUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DepositUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload>[]
+        }
+        upsert: {
+          args: Prisma.DepositUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepositPayload>
+        }
+        aggregate: {
+          args: Prisma.DepositAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDeposit>
+        }
+        groupBy: {
+          args: Prisma.DepositGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DepositGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DepositCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DepositCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -795,6 +945,39 @@ export const ValidatorScalarFieldEnum = {
 } as const
 
 export type ValidatorScalarFieldEnum = (typeof ValidatorScalarFieldEnum)[keyof typeof ValidatorScalarFieldEnum]
+
+
+export const WithdrawalScalarFieldEnum = {
+  id: 'id',
+  chainId: 'chainId',
+  bridge: 'bridge',
+  token: 'token',
+  recipient: 'recipient',
+  transferAmount: 'transferAmount',
+  companyAmount: 'companyAmount',
+  creatorAmount: 'creatorAmount',
+  nonce: 'nonce',
+  createdAt: 'createdAt'
+} as const
+
+export type WithdrawalScalarFieldEnum = (typeof WithdrawalScalarFieldEnum)[keyof typeof WithdrawalScalarFieldEnum]
+
+
+export const DepositScalarFieldEnum = {
+  id: 'id',
+  chainId: 'chainId',
+  bridge: 'bridge',
+  token: 'token',
+  sender: 'sender',
+  recipient: 'recipient',
+  transferAmount: 'transferAmount',
+  cosmosAmount: 'cosmosAmount',
+  nonce: 'nonce',
+  txHash: 'txHash',
+  createdAt: 'createdAt'
+} as const
+
+export type DepositScalarFieldEnum = (typeof DepositScalarFieldEnum)[keyof typeof DepositScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -994,6 +1177,8 @@ export type GlobalOmitConfig = {
   event?: Prisma.EventOmit
   participant?: Prisma.ParticipantOmit
   validator?: Prisma.ValidatorOmit
+  withdrawal?: Prisma.WithdrawalOmit
+  deposit?: Prisma.DepositOmit
 }
 
 /* Types for Logging */

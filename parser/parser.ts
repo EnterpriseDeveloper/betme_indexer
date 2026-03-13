@@ -1,4 +1,5 @@
 import { RawEvent } from "../chain/interfaces";
+import { BridgeRepository } from "../db/bridgeRepository";
 import { EventRepository } from "../db/eventsRepository";
 import { PartRepository } from "../db/partRepository";
 import { ValRepository } from "../db/valRepository";
@@ -13,6 +14,8 @@ const EVENT_TYPES = {
   EVENT_CREATED: "CREATE_EVENT",
   PARTICIPATE_EVENT: "PARTICIPATE_EVENT",
   VALIDATE_EVENT: "VALIDATE_EVENT",
+  WITHDRAWAL_EVENT: "BURN_TO_EVM",
+  DEPOSIT_EVENT: "MINT_FROM_EVM",
 } as const;
 
 export class EventParser {
@@ -20,6 +23,7 @@ export class EventParser {
     private readonly eventDb: EventRepository,
     private readonly partDb: PartRepository,
     private readonly validDB: ValRepository,
+    private readonly bridgeDb: BridgeRepository,
   ) {}
   async parse(rawEvents: RawEvent[]): Promise<string> {
     for (const raw of rawEvents) {
@@ -37,6 +41,13 @@ export class EventParser {
             await this.parseValidation(raw);
             break;
 
+          case EVENT_TYPES.WITHDRAWAL_EVENT:
+            await this.parseWithdrawal(raw);
+            break;
+
+          case EVENT_TYPES.DEPOSIT_EVENT:
+            await this.parseDeposit(raw);
+            break;
           // default:
           //   console.warn("UNKNOWN EVENT", {
           //     type: raw.type,
@@ -72,6 +83,18 @@ export class EventParser {
       Number(payload.eventId),
       payload.refunded,
     );
+  }
+
+  private async parseWithdrawal(raw: RawEvent) {
+    console.log("WITHDRAWAL_EVENT", JSON.stringify(raw));
+    const payload = this.parseWithdrawalEvent(raw.attributes);
+    await this.bridgeDb.saveWithdrawal(payload);
+  }
+
+  private async parseDeposit(raw: RawEvent) {
+    console.log("DEPOSIT_EVENT", JSON.stringify(raw));
+    const payload = this.parseDepositEvent(raw.attributes);
+    await this.bridgeDb.saveDeposit(payload);
   }
 
   private parseCreateEvent(attributes: Attribute[]): CreateEventPayload {
@@ -120,6 +143,37 @@ export class EventParser {
       createdAt: BigInt(obj.createdAt),
       refunded: obj.refunded === "true",
       companyFee: BigInt(obj.companyFee),
+    };
+  }
+
+  private parseWithdrawalEvent(attributes: Attribute[]) {
+    const obj = Object.fromEntries(attributes.map((a) => [a.key, a.value]));
+
+    return {
+      chainId: BigInt(obj.chain_id),
+      bridge: obj.bridge,
+      token: obj.token,
+      recipient: obj.recipient,
+      transferAmount: BigInt(obj.transfer_amount),
+      companyAmount: BigInt(obj.company_amount),
+      creatorAmount: BigInt(obj.creator_amount),
+      nonce: BigInt(obj.nonce),
+    };
+  }
+
+  private parseDepositEvent(attributes: Attribute[]) {
+    const obj = Object.fromEntries(attributes.map((a) => [a.key, a.value]));
+
+    return {
+      chainId: BigInt(obj.chain_id),
+      bridge: obj.bridge,
+      token: obj.token,
+      sender: obj.sender,
+      recipient: obj.recipient,
+      transferAmount: BigInt(obj.transfer_amount),
+      cosmosAmount: BigInt(obj.cosmos_amount),
+      nonce: BigInt(obj.nonce),
+      txHash: obj.tx_hash,
     };
   }
 }

@@ -58,3 +58,34 @@ model Validator {
 
   @@index([eventId])
 }
+
+model Withdrawal {
+  id             BigInt  @id @default(autoincrement())
+  chainId        BigInt
+  bridge         String
+  token          String
+  recipient      String
+  transferAmount BigInt
+  companyAmount  BigInt
+  creatorAmount  BigInt
+  nonce          BigInt
+  createdAt      DateTime @default(now())
+
+  @@index([chainId, nonce])
+}
+
+model Deposit {
+  id             BigInt  @id @default(autoincrement())
+  chainId        BigInt
+  bridge         String
+  token          String
+  sender         String
+  recipient      String
+  transferAmount BigInt
+  cosmosAmount   BigInt
+  nonce          BigInt
+  txHash         String
+  createdAt      DateTime @default(now())
+
+  @@index([chainId, nonce])
+}

@@ -7,6 +7,7 @@ import { EventParser } from "./parser/parser";
 import { EventsPrismaRepository } from "./db/eventsRepository";
 import { PartPrismaRepository } from "./db/partRepository";
 import { ValPrismaRepository } from "./db/valRepository";
+import { PrismaBridgeRepository } from "./db/bridgeRepository";
 
 const port = process.env.PORT || 3000;
 
@@ -24,10 +25,12 @@ app.listen(port, async () => {
   const eventRepository = new EventsPrismaRepository();
   const partRepository = new PartPrismaRepository();
   const validRepository = new ValPrismaRepository();
+  const bridgeRepository = new PrismaBridgeRepository();
   const parser = new EventParser(
     eventRepository,
     partRepository,
     validRepository,
+    bridgeRepository,
   );
 
   const blockRepository = new PrismaBlockRepository();

@@ -54,7 +54,9 @@ export const ModelName = {
   IndexerState: 'IndexerState',
   Event: 'Event',
   Participant: 'Participant',
-  Validator: 'Validator'
+  Validator: 'Validator',
+  Withdrawal: 'Withdrawal',
+  Deposit: 'Deposit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -126,6 +128,39 @@ export const ValidatorScalarFieldEnum = {
 } as const
 
 export type ValidatorScalarFieldEnum = (typeof ValidatorScalarFieldEnum)[keyof typeof ValidatorScalarFieldEnum]
+
+
+export const WithdrawalScalarFieldEnum = {
+  id: 'id',
+  chainId: 'chainId',
+  bridge: 'bridge',
+  token: 'token',
+  recipient: 'recipient',
+  transferAmount: 'transferAmount',
+  companyAmount: 'companyAmount',
+  creatorAmount: 'creatorAmount',
+  nonce: 'nonce',
+  createdAt: 'createdAt'
+} as const
+
+export type WithdrawalScalarFieldEnum = (typeof WithdrawalScalarFieldEnum)[keyof typeof WithdrawalScalarFieldEnum]
+
+
+export const DepositScalarFieldEnum = {
+  id: 'id',
+  chainId: 'chainId',
+  bridge: 'bridge',
+  token: 'token',
+  sender: 'sender',
+  recipient: 'recipient',
+  transferAmount: 'transferAmount',
+  cosmosAmount: 'cosmosAmount',
+  nonce: 'nonce',
+  txHash: 'txHash',
+  createdAt: 'createdAt'
+} as const
+
+export type DepositScalarFieldEnum = (typeof DepositScalarFieldEnum)[keyof typeof DepositScalarFieldEnum]
 
 
 export const SortOrder = {

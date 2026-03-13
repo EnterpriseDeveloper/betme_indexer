@@ -59,3 +59,13 @@ export type Participant = Prisma.ParticipantModel
  * 
  */
 export type Validator = Prisma.ValidatorModel
+/**
+ * Model Withdrawal
+ * 
+ */
+export type Withdrawal = Prisma.WithdrawalModel
+/**
+ * Model Deposit
+ * 
+ */
+export type Deposit = Prisma.DepositModel
