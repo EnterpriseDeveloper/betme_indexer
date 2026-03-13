@@ -20,6 +20,7 @@
     "express": "^5.2.1",
     "pg": "^8.19.0",
     "ts-proto": "^2.11.2",
+    "viem": "^2.47.2",
     "ws": "^8.19.0"
   },
   "devDependencies": {

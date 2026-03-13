@@ -3,6 +3,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { ParticipateEventPayload } from "../parser/types";
 import getParticipantByID from "../cosmos/cosmos";
 import { EventStatus } from "./types";
+import { formatUnits } from "viem";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -31,7 +32,7 @@ export class PartPrismaRepository implements PartRepository {
             amount: payload.amount,
             token: payload.token,
             status: EventStatus.PENDING,
-            result: BigInt(0),
+            result: 0,
             createdAt: payload.createdAt,
           },
         });
@@ -51,7 +52,8 @@ export class PartPrismaRepository implements PartRepository {
           throw console.error("Answer not found in event");
         }
 
-        pool[index] = pool[index] + payload.amount;
+        pool[index] =
+          pool[index] + BigInt(formatUnits(BigInt(payload.amount), 6));
 
         await tx.event.update({
           where: { id: payload.eventId },
@@ -81,7 +83,10 @@ export class PartPrismaRepository implements PartRepository {
             await tx.participant.update({
               where: { id: eventId },
               data: {
-                result: part.result,
+                result:
+                  part.result === 0
+                    ? BigInt(0)
+                    : BigInt(formatUnits(BigInt(part.result), 6)),
                 status: refunded ? EventStatus.REFUNDED : EventStatus.FINISHED,
               },
             });

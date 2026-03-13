@@ -53,6 +53,39 @@ CREATE TABLE "Validator" (
     CONSTRAINT "Validator_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Withdrawal" (
+    "id" BIGSERIAL NOT NULL,
+    "chainId" BIGINT NOT NULL,
+    "bridge" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "recipient" TEXT NOT NULL,
+    "transferAmount" BIGINT NOT NULL,
+    "companyAmount" BIGINT NOT NULL,
+    "creatorAmount" BIGINT NOT NULL,
+    "nonce" BIGINT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Withdrawal_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Deposit" (
+    "id" BIGSERIAL NOT NULL,
+    "chainId" BIGINT NOT NULL,
+    "bridge" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "sender" TEXT NOT NULL,
+    "recipient" TEXT NOT NULL,
+    "transferAmount" BIGINT NOT NULL,
+    "cosmosAmount" BIGINT NOT NULL,
+    "nonce" BIGINT NOT NULL,
+    "txHash" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Deposit_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE INDEX "Participant_eventId_idx" ON "Participant"("eventId");
 
@@ -61,6 +94,12 @@ CREATE INDEX "Participant_creator_idx" ON "Participant"("creator");
 
 -- CreateIndex
 CREATE INDEX "Validator_eventId_idx" ON "Validator"("eventId");
+
+-- CreateIndex
+CREATE INDEX "Withdrawal_chainId_nonce_idx" ON "Withdrawal"("chainId", "nonce");
+
+-- CreateIndex
+CREATE INDEX "Deposit_chainId_nonce_idx" ON "Deposit"("chainId", "nonce");
 
 -- AddForeignKey
 ALTER TABLE "Participant" ADD CONSTRAINT "Participant_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE CASCADE ON UPDATE CASCADE;

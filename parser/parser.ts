@@ -1,3 +1,4 @@
+import { formatEther, formatUnits } from "viem";
 import { RawEvent } from "../chain/interfaces";
 import { BridgeRepository } from "../db/bridgeRepository";
 import { EventRepository } from "../db/eventsRepository";
@@ -104,8 +105,8 @@ export class EventParser {
       creator: obj.creator,
       question: obj.question,
       answers: JSON.parse(obj.answers) as string[],
-      answersPool: (JSON.parse(obj.answersPool) as (string | number)[]).map(
-        (v) => BigInt(v),
+      answersPool: (JSON.parse(obj.answersPool) as string[]).map((v) =>
+        BigInt(v),
       ),
       startTime: BigInt(obj.startTime),
       endTime: BigInt(obj.endTime),
@@ -125,7 +126,10 @@ export class EventParser {
       creator: obj.creator,
       eventId: BigInt(obj.eventId),
       answer: obj.answer,
-      amount: BigInt(obj.amount),
+      amount:
+        obj.amount === "0"
+          ? BigInt(0)
+          : BigInt(formatUnits(BigInt(obj.amount), 6)),
       token: obj.token,
       createdAt: BigInt(obj.createdAt),
     };
@@ -142,7 +146,7 @@ export class EventParser {
       source: obj.source,
       createdAt: BigInt(obj.createdAt),
       refunded: obj.refunded === "true",
-      companyFee: BigInt(obj.companyFee),
+      companyFee: BigInt(formatUnits(BigInt(obj.companyFee), 6)),
     };
   }
 
@@ -154,9 +158,9 @@ export class EventParser {
       bridge: obj.bridge,
       token: obj.token,
       recipient: obj.recipient,
-      transferAmount: BigInt(obj.transfer_amount),
-      companyAmount: BigInt(obj.company_amount),
-      creatorAmount: BigInt(obj.creator_amount),
+      transferAmount: BigInt(formatUnits(BigInt(obj.transfer_amount), 6)),
+      companyAmount: BigInt(formatUnits(BigInt(obj.company_amount), 6)),
+      creatorAmount: BigInt(formatUnits(BigInt(obj.creator_amount), 6)),
       nonce: BigInt(obj.nonce),
     };
   }
@@ -170,8 +174,8 @@ export class EventParser {
       token: obj.token,
       sender: obj.sender,
       recipient: obj.recipient,
-      transferAmount: BigInt(obj.transfer_amount),
-      cosmosAmount: BigInt(obj.cosmos_amount),
+      transferAmount: BigInt(formatEther(BigInt(obj.transfer_amount))),
+      cosmosAmount: BigInt(formatUnits(BigInt(obj.cosmos_amount), 6)),
       nonce: BigInt(obj.nonce),
       txHash: obj.tx_hash,
     };
