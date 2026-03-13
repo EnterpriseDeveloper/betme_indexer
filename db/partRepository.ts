@@ -53,7 +53,8 @@ export class PartPrismaRepository implements PartRepository {
         }
 
         pool[index] =
-          pool[index] + BigInt(formatUnits(BigInt(payload.amount), 6));
+          pool[index] +
+          BigInt(Number(formatUnits(BigInt(payload.amount), 6)) * 100);
 
         await tx.event.update({
           where: { id: payload.eventId },
@@ -86,7 +87,7 @@ export class PartPrismaRepository implements PartRepository {
                 result:
                   part.result === 0
                     ? BigInt(0)
-                    : BigInt(formatUnits(BigInt(part.result), 6)),
+                    : BigInt(Number(formatUnits(BigInt(part.result), 6)) * 100),
                 status: refunded ? EventStatus.REFUNDED : EventStatus.FINISHED,
               },
             });

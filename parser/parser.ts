@@ -129,7 +129,7 @@ export class EventParser {
       amount:
         obj.amount === "0"
           ? BigInt(0)
-          : BigInt(formatUnits(BigInt(obj.amount), 6)),
+          : BigInt(Number(formatUnits(BigInt(obj.amount), 6)) * 100),
       token: obj.token,
       createdAt: BigInt(obj.createdAt),
     };
@@ -146,7 +146,7 @@ export class EventParser {
       source: obj.source,
       createdAt: BigInt(obj.createdAt),
       refunded: obj.refunded === "true",
-      companyFee: BigInt(formatUnits(BigInt(obj.companyFee), 6)),
+      companyFee: BigInt(Number(formatUnits(BigInt(obj.companyFee), 6)) * 100),
     };
   }
 
@@ -158,9 +158,15 @@ export class EventParser {
       bridge: obj.bridge,
       token: obj.token,
       recipient: obj.recipient,
-      transferAmount: BigInt(formatUnits(BigInt(obj.transfer_amount), 6)),
-      companyAmount: BigInt(formatUnits(BigInt(obj.company_amount), 6)),
-      creatorAmount: BigInt(formatUnits(BigInt(obj.creator_amount), 6)),
+      transferAmount: BigInt(
+        Number(formatEther(BigInt(obj.transfer_amount))) * 100,
+      ),
+      companyAmount: BigInt(
+        Number(formatUnits(BigInt(obj.company_amount), 6)) * 100,
+      ),
+      creatorAmount: BigInt(
+        Number(formatUnits(BigInt(obj.creator_amount), 6)) * 100,
+      ),
       nonce: BigInt(obj.nonce),
     };
   }
@@ -174,8 +180,12 @@ export class EventParser {
       token: obj.token,
       sender: obj.sender,
       recipient: obj.recipient,
-      transferAmount: BigInt(formatEther(BigInt(obj.transfer_amount))),
-      cosmosAmount: BigInt(formatUnits(BigInt(obj.cosmos_amount), 6)),
+      transferAmount: BigInt(
+        Number(formatEther(BigInt(obj.transfer_amount))) * 100,
+      ),
+      cosmosAmount: BigInt(
+        Number(formatUnits(BigInt(obj.cosmos_amount), 6)) * 100,
+      ),
       nonce: BigInt(obj.nonce),
       txHash: obj.tx_hash,
     };
