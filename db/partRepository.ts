@@ -52,9 +52,7 @@ export class PartPrismaRepository implements PartRepository {
           throw console.error("Answer not found in event");
         }
 
-        pool[index] =
-          pool[index] +
-          BigInt(Number(formatUnits(BigInt(payload.amount), 6)) * 100);
+        pool[index] = pool[index] + payload.amount;
 
         await tx.event.update({
           where: { id: payload.eventId },
