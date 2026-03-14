@@ -39,6 +39,7 @@ model Participant {
   result    BigInt
   status    String
   createdAt BigInt
+  increase  Boolean   @default(false)
   event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@index([eventId])

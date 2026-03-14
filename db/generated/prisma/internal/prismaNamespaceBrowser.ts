@@ -110,7 +110,8 @@ export const ParticipantScalarFieldEnum = {
   token: 'token',
   result: 'result',
   status: 'status',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  increase: 'increase'
 } as const
 
 export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[keyof typeof ParticipantScalarFieldEnum]

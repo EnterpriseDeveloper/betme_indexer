@@ -487,10 +487,6 @@ export type ValidatorUncheckedUpdateManyWithoutEventNestedInput = {
   deleteMany?: Prisma.ValidatorScalarWhereInput | Prisma.ValidatorScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type ValidatorCreateWithoutEventInput = {
   id: bigint | number
   creator: string

@@ -1,6 +1,9 @@
 import { PrismaClient } from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { ParticipateEventPayload } from "../parser/types";
+import {
+  ParticipateEventPayload,
+  SetIncreasePartEventPayload,
+} from "../parser/types";
 import getParticipantByID from "../cosmos/cosmos";
 import { EventStatus } from "./types";
 import { formatUnits } from "viem";
@@ -17,6 +20,7 @@ export interface PartRepository {
     eventId: number,
     refunded: boolean,
   ): Promise<void>;
+  setIncreasePart(payload: SetIncreasePartEventPayload): Promise<void>;
 }
 
 export class PartPrismaRepository implements PartRepository {
@@ -34,6 +38,7 @@ export class PartPrismaRepository implements PartRepository {
             status: EventStatus.PENDING,
             result: 0,
             createdAt: payload.createdAt,
+            increase: false,
           },
         });
 
@@ -96,6 +101,61 @@ export class PartPrismaRepository implements PartRepository {
       });
     } catch (e) {
       console.log(`updateParticipantFromValidator: ${e}`);
+    }
+  }
+
+  async setIncreasePart(payload: SetIncreasePartEventPayload): Promise<void> {
+    try {
+      await prisma.$transaction(async (tx) => {
+        const participant = await tx.participant.findUnique({
+          where: { id: payload.id },
+        });
+
+        if (!participant) throw console.error("Participant not found");
+
+        const id = BigInt(`${payload.id}${payload.createdAt}`);
+
+        await tx.participant.create({
+          data: {
+            id: id,
+            creator: payload.creator,
+            eventId: payload.eventId,
+            answer: participant.answer,
+            amount: payload.amount,
+            token: payload.token,
+            status: EventStatus.PENDING,
+            result: 0,
+            createdAt: payload.createdAt,
+            increase: true,
+          },
+        });
+
+        const event = await tx.event.findUnique({
+          where: { id: payload.eventId },
+        });
+
+        if (!event) throw console.error("Event not found");
+
+        const answers = event.answers;
+        const pool = [...event.answersPool];
+
+        const index = answers.indexOf(participant.answer);
+
+        if (index === -1) {
+          throw console.error("Answer not found in event");
+        }
+
+        pool[index] = pool[index] + payload.amount;
+
+        await tx.event.update({
+          where: { id: payload.eventId },
+          data: {
+            answersPool: pool,
+          },
+        });
+      });
+    } catch (e) {
+      console.log(`setIncreasePart: ${e}`);
     }
   }
 }
