@@ -7,7 +7,6 @@ import {
 } from "../parser/types";
 import getParticipantStatusByID from "../cosmos/cosmos";
 import { EventStatus } from "./types";
-import { formatUnits } from "viem";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -81,7 +80,7 @@ export class PartPrismaRepository implements PartRepository {
     try {
       await prisma.$transaction(async (tx) => {
         const participants = await tx.participant.findMany({
-          where: { eventId: eventId },
+          where: { eventId: eventId, increase: false },
         });
 
         for (const participant of participants) {
@@ -96,9 +95,7 @@ export class PartPrismaRepository implements PartRepository {
                 result:
                   part.resultAmount === 0
                     ? BigInt(0)
-                    : BigInt(
-                        Number(formatUnits(BigInt(part.resultAmount), 6)) * 100,
-                      ),
+                    : BigInt(Number(part.resultAmount)) / BigInt(10000),
                 status: refunded ? EventStatus.REFUNDED : EventStatus.FINISHED,
               },
             });

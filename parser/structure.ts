@@ -1,4 +1,4 @@
-import { formatEther, formatUnits } from "viem";
+import { formatEther } from "viem";
 import {
   CreateEventPayload,
   ParticipateEventPayload,
@@ -39,7 +39,7 @@ export function parseParticipateEvent(
     amount:
       obj.amount === "0"
         ? BigInt(0)
-        : BigInt(Number(formatUnits(BigInt(obj.amount), 6)) * 100),
+        : BigInt(Number(obj.amount)) / BigInt(10000),
     token: obj.token,
     createdAt: BigInt(obj.createdAt),
   };
@@ -58,8 +58,14 @@ export function validateParserEvent(
     source: obj.source,
     createdAt: BigInt(obj.createdAt),
     refunded: obj.refunded === "true",
-    companyFee: BigInt(Number(formatUnits(BigInt(obj.companyFee), 6)) * 100),
-    creatorFee: BigInt(Number(formatUnits(BigInt(obj.creatorFee), 6)) * 100),
+    companyFee:
+      obj.companyFee === "0"
+        ? BigInt(0)
+        : BigInt(Number(obj.companyFee)) / BigInt(10000),
+    creatorFee:
+      obj.creatorFee === "0"
+        ? BigInt(0)
+        : BigInt(Number(obj.creatorFee)) / BigInt(10000),
   };
 }
 
@@ -74,12 +80,14 @@ export function parseWithdrawalEvent(attributes: Attribute[]) {
     transferAmount: BigInt(
       Number(formatEther(BigInt(obj.transfer_amount))) * 100,
     ),
-    companyAmount: BigInt(
-      Number(formatUnits(BigInt(obj.company_amount), 6)) * 100,
-    ),
-    creatorAmount: BigInt(
-      Number(formatUnits(BigInt(obj.creator_amount), 6)) * 100,
-    ),
+    companyAmount:
+      obj.company_amount === "0"
+        ? BigInt(0)
+        : BigInt(Number(obj.company_amount)) / BigInt(10000),
+    creatorAmount:
+      obj.creator_amount === "0"
+        ? BigInt(0)
+        : BigInt(Number(obj.creator_amount)) / BigInt(10000),
     nonce: BigInt(obj.nonce),
   };
 }
@@ -96,9 +104,7 @@ export function parseDepositEvent(attributes: Attribute[]) {
     transferAmount: BigInt(
       Number(formatEther(BigInt(obj.transfer_amount))) * 100,
     ),
-    cosmosAmount: BigInt(
-      Number(formatUnits(BigInt(obj.cosmos_amount), 6)) * 100,
-    ),
+    cosmosAmount: BigInt(Number(obj.cosmos_amount)) / BigInt(10000),
     nonce: BigInt(obj.nonce),
     txHash: obj.tx_hash,
   };
@@ -113,7 +119,10 @@ export function parseSetIncreasePartEvent(
     id: BigInt(obj.id),
     creator: obj.creator,
     eventId: BigInt(obj.eventId),
-    amount: BigInt(Number(formatUnits(BigInt(obj.amount), 6)) * 100),
+    amount:
+      obj.amount === "0"
+        ? BigInt(0)
+        : BigInt(Number(obj.amount)) / BigInt(10000),
     token: obj.token,
     createdAt: BigInt(obj.createdAt),
   };
@@ -128,6 +137,9 @@ export function parsePaidMoneyPartEvent(
     creator: obj.creator,
     eventId: BigInt(obj.eventId),
     partId: BigInt(obj.partId),
-    amount: BigInt(Number(formatUnits(BigInt(obj.amount), 6)) * 100),
+    amount:
+      obj.resultAmount === "0"
+        ? BigInt(0)
+        : BigInt(Number(obj.resultAmount)) / BigInt(10000),
   };
 }
