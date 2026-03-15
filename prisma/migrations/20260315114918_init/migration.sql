@@ -35,6 +35,8 @@ CREATE TABLE "Participant" (
     "result" BIGINT NOT NULL,
     "status" TEXT NOT NULL,
     "createdAt" BIGINT NOT NULL,
+    "paid" BOOLEAN NOT NULL DEFAULT false,
+    "increase" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Participant_pkey" PRIMARY KEY ("id")
 );
@@ -48,6 +50,7 @@ CREATE TABLE "Validator" (
     "source" TEXT NOT NULL,
     "refunded" BOOLEAN NOT NULL,
     "companyAmount" BIGINT NOT NULL,
+    "creatorAmount" BIGINT NOT NULL,
     "createdAt" BIGINT NOT NULL,
 
     CONSTRAINT "Validator_pkey" PRIMARY KEY ("id")
