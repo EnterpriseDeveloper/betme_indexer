@@ -28,6 +28,7 @@ export class ValPrismaRepository implements ValRepository {
           createdAt: payload.createdAt,
           refunded: payload.refunded,
           companyAmount: payload.companyFee,
+          creatorAmount: payload.creatorFee,
         },
       });
 

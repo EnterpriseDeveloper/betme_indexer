@@ -6,7 +6,10 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
-import { PageRequest, PageResponse } from "../../../cosmos/base/query/v1beta1/pagination";
+import {
+  PageRequest,
+  PageResponse,
+} from "../../../cosmos/base/query/v1beta1/pagination";
 import { Events } from "./events";
 import { Params } from "./params";
 import { Participant } from "./participant";
@@ -15,8 +18,7 @@ import { Validator } from "./validator";
 export const protobufPackage = "bettery.events.v1";
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
-export interface QueryParamsRequest {
-}
+export interface QueryParamsRequest {}
 
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
@@ -86,8 +88,7 @@ export interface QueryAllValidatorRequest {
 }
 
 /** QueryAllEventsForValidatorRequest defines the QueryAllEventsForValidatorRequest message. */
-export interface QueryAllEventsForValidatorRequest {
-}
+export interface QueryAllEventsForValidatorRequest {}
 
 /** QueryAllValidatorResponse defines the QueryAllValidatorResponse message. */
 export interface QueryAllValidatorResponse {
@@ -106,17 +107,36 @@ export interface QueryParticipantByIdResponse {
   participant: Participant | undefined;
 }
 
+/** QueryParticipantStatusRequest defines the QueryParticipantStatusRequest message. */
+export interface QueryParticipantStatusRequest {
+  eventId: number;
+  participantId: number;
+}
+
+/** QueryParticipantStatusResponse defines the QueryParticipantStatusResponse message. */
+export interface QueryParticipantStatusResponse {
+  eventStatus: string;
+  resultAmount: number;
+}
+
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
 
 export const QueryParamsRequest: MessageFns<QueryParamsRequest> = {
-  encode(_: QueryParamsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    _: QueryParamsRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): QueryParamsRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -140,10 +160,14 @@ export const QueryParamsRequest: MessageFns<QueryParamsRequest> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(base?: I): QueryParamsRequest {
+  create<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(
+    base?: I,
+  ): QueryParamsRequest {
     return QueryParamsRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(
+    _: I,
+  ): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
   },
@@ -154,15 +178,22 @@ function createBaseQueryParamsResponse(): QueryParamsResponse {
 }
 
 export const QueryParamsResponse: MessageFns<QueryParamsResponse> = {
-  encode(message: QueryParamsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: QueryParamsResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): QueryParamsResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -186,7 +217,9 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse> = {
   },
 
   fromJSON(object: any): QueryParamsResponse {
-    return { params: isSet(object.params) ? Params.fromJSON(object.params) : undefined };
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+    };
   },
 
   toJSON(message: QueryParamsResponse): unknown {
@@ -197,14 +230,19 @@ export const QueryParamsResponse: MessageFns<QueryParamsResponse> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(base?: I): QueryParamsResponse {
+  create<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(
+    base?: I,
+  ): QueryParamsResponse {
     return QueryParamsResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(
+    object: I,
+  ): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
+    message.params =
+      object.params !== undefined && object.params !== null
+        ? Params.fromPartial(object.params)
+        : undefined;
     return message;
   },
 };
@@ -214,15 +252,22 @@ function createBaseQueryGetEventsRequest(): QueryGetEventsRequest {
 }
 
 export const QueryGetEventsRequest: MessageFns<QueryGetEventsRequest> = {
-  encode(message: QueryGetEventsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: QueryGetEventsRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.id !== 0) {
       writer.uint32(8).uint64(message.id);
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetEventsRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): QueryGetEventsRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetEventsRequest();
     while (reader.pos < end) {
@@ -257,10 +302,14 @@ export const QueryGetEventsRequest: MessageFns<QueryGetEventsRequest> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryGetEventsRequest>, I>>(base?: I): QueryGetEventsRequest {
+  create<I extends Exact<DeepPartial<QueryGetEventsRequest>, I>>(
+    base?: I,
+  ): QueryGetEventsRequest {
     return QueryGetEventsRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetEventsRequest>, I>>(object: I): QueryGetEventsRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryGetEventsRequest>, I>>(
+    object: I,
+  ): QueryGetEventsRequest {
     const message = createBaseQueryGetEventsRequest();
     message.id = object.id ?? 0;
     return message;
@@ -272,15 +321,22 @@ function createBaseQueryGetEventsResponse(): QueryGetEventsResponse {
 }
 
 export const QueryGetEventsResponse: MessageFns<QueryGetEventsResponse> = {
-  encode(message: QueryGetEventsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: QueryGetEventsResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.events !== undefined) {
       Events.encode(message.events, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetEventsResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): QueryGetEventsResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetEventsResponse();
     while (reader.pos < end) {
@@ -304,7 +360,9 @@ export const QueryGetEventsResponse: MessageFns<QueryGetEventsResponse> = {
   },
 
   fromJSON(object: any): QueryGetEventsResponse {
-    return { events: isSet(object.events) ? Events.fromJSON(object.events) : undefined };
+    return {
+      events: isSet(object.events) ? Events.fromJSON(object.events) : undefined,
+    };
   },
 
   toJSON(message: QueryGetEventsResponse): unknown {
@@ -315,14 +373,19 @@ export const QueryGetEventsResponse: MessageFns<QueryGetEventsResponse> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryGetEventsResponse>, I>>(base?: I): QueryGetEventsResponse {
+  create<I extends Exact<DeepPartial<QueryGetEventsResponse>, I>>(
+    base?: I,
+  ): QueryGetEventsResponse {
     return QueryGetEventsResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetEventsResponse>, I>>(object: I): QueryGetEventsResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryGetEventsResponse>, I>>(
+    object: I,
+  ): QueryGetEventsResponse {
     const message = createBaseQueryGetEventsResponse();
-    message.events = (object.events !== undefined && object.events !== null)
-      ? Events.fromPartial(object.events)
-      : undefined;
+    message.events =
+      object.events !== undefined && object.events !== null
+        ? Events.fromPartial(object.events)
+        : undefined;
     return message;
   },
 };
@@ -331,78 +394,97 @@ function createBaseQueryEventsForValidatorResponse(): QueryEventsForValidatorRes
   return { events: [] };
 }
 
-export const QueryEventsForValidatorResponse: MessageFns<QueryEventsForValidatorResponse> = {
-  encode(message: QueryEventsForValidatorResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    for (const v of message.events) {
-      Events.encode(v!, writer.uint32(10).fork()).join();
-    }
-    return writer;
-  },
+export const QueryEventsForValidatorResponse: MessageFns<QueryEventsForValidatorResponse> =
+  {
+    encode(
+      message: QueryEventsForValidatorResponse,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      for (const v of message.events) {
+        Events.encode(v!, writer.uint32(10).fork()).join();
+      }
+      return writer;
+    },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryEventsForValidatorResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryEventsForValidatorResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryEventsForValidatorResponse {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryEventsForValidatorResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
+
+            message.events.push(Events.decode(reader, reader.uint32()));
+            continue;
           }
-
-          message.events.push(Events.decode(reader, reader.uint32()));
-          continue;
         }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      return message;
+    },
+
+    fromJSON(object: any): QueryEventsForValidatorResponse {
+      return {
+        events: globalThis.Array.isArray(object?.events)
+          ? object.events.map((e: any) => Events.fromJSON(e))
+          : [],
+      };
+    },
+
+    toJSON(message: QueryEventsForValidatorResponse): unknown {
+      const obj: any = {};
+      if (message.events?.length) {
+        obj.events = message.events.map((e) => Events.toJSON(e));
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return obj;
+    },
 
-  fromJSON(object: any): QueryEventsForValidatorResponse {
-    return {
-      events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => Events.fromJSON(e)) : [],
-    };
-  },
-
-  toJSON(message: QueryEventsForValidatorResponse): unknown {
-    const obj: any = {};
-    if (message.events?.length) {
-      obj.events = message.events.map((e) => Events.toJSON(e));
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<QueryEventsForValidatorResponse>, I>>(base?: I): QueryEventsForValidatorResponse {
-    return QueryEventsForValidatorResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryEventsForValidatorResponse>, I>>(
-    object: I,
-  ): QueryEventsForValidatorResponse {
-    const message = createBaseQueryEventsForValidatorResponse();
-    message.events = object.events?.map((e) => Events.fromPartial(e)) || [];
-    return message;
-  },
-};
+    create<I extends Exact<DeepPartial<QueryEventsForValidatorResponse>, I>>(
+      base?: I,
+    ): QueryEventsForValidatorResponse {
+      return QueryEventsForValidatorResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<
+      I extends Exact<DeepPartial<QueryEventsForValidatorResponse>, I>,
+    >(object: I): QueryEventsForValidatorResponse {
+      const message = createBaseQueryEventsForValidatorResponse();
+      message.events = object.events?.map((e) => Events.fromPartial(e)) || [];
+      return message;
+    },
+  };
 
 function createBaseQueryAllEventsRequest(): QueryAllEventsRequest {
   return { pagination: undefined };
 }
 
 export const QueryAllEventsRequest: MessageFns<QueryAllEventsRequest> = {
-  encode(message: QueryAllEventsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: QueryAllEventsRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllEventsRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): QueryAllEventsRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllEventsRequest();
     while (reader.pos < end) {
@@ -426,7 +508,11 @@ export const QueryAllEventsRequest: MessageFns<QueryAllEventsRequest> = {
   },
 
   fromJSON(object: any): QueryAllEventsRequest {
-    return { pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined };
+    return {
+      pagination: isSet(object.pagination)
+        ? PageRequest.fromJSON(object.pagination)
+        : undefined,
+    };
   },
 
   toJSON(message: QueryAllEventsRequest): unknown {
@@ -437,14 +523,19 @@ export const QueryAllEventsRequest: MessageFns<QueryAllEventsRequest> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryAllEventsRequest>, I>>(base?: I): QueryAllEventsRequest {
+  create<I extends Exact<DeepPartial<QueryAllEventsRequest>, I>>(
+    base?: I,
+  ): QueryAllEventsRequest {
     return QueryAllEventsRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<QueryAllEventsRequest>, I>>(object: I): QueryAllEventsRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryAllEventsRequest>, I>>(
+    object: I,
+  ): QueryAllEventsRequest {
     const message = createBaseQueryAllEventsRequest();
-    message.pagination = (object.pagination !== undefined && object.pagination !== null)
-      ? PageRequest.fromPartial(object.pagination)
-      : undefined;
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
+        ? PageRequest.fromPartial(object.pagination)
+        : undefined;
     return message;
   },
 };
@@ -454,7 +545,10 @@ function createBaseQueryAllEventsResponse(): QueryAllEventsResponse {
 }
 
 export const QueryAllEventsResponse: MessageFns<QueryAllEventsResponse> = {
-  encode(message: QueryAllEventsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: QueryAllEventsResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     for (const v of message.events) {
       Events.encode(v!, writer.uint32(10).fork()).join();
     }
@@ -464,8 +558,12 @@ export const QueryAllEventsResponse: MessageFns<QueryAllEventsResponse> = {
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllEventsResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): QueryAllEventsResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllEventsResponse();
     while (reader.pos < end) {
@@ -498,8 +596,12 @@ export const QueryAllEventsResponse: MessageFns<QueryAllEventsResponse> = {
 
   fromJSON(object: any): QueryAllEventsResponse {
     return {
-      events: globalThis.Array.isArray(object?.events) ? object.events.map((e: any) => Events.fromJSON(e)) : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+      events: globalThis.Array.isArray(object?.events)
+        ? object.events.map((e: any) => Events.fromJSON(e))
+        : [],
+      pagination: isSet(object.pagination)
+        ? PageResponse.fromJSON(object.pagination)
+        : undefined,
     };
   },
 
@@ -514,15 +616,20 @@ export const QueryAllEventsResponse: MessageFns<QueryAllEventsResponse> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryAllEventsResponse>, I>>(base?: I): QueryAllEventsResponse {
+  create<I extends Exact<DeepPartial<QueryAllEventsResponse>, I>>(
+    base?: I,
+  ): QueryAllEventsResponse {
     return QueryAllEventsResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<QueryAllEventsResponse>, I>>(object: I): QueryAllEventsResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryAllEventsResponse>, I>>(
+    object: I,
+  ): QueryAllEventsResponse {
     const message = createBaseQueryAllEventsResponse();
     message.events = object.events?.map((e) => Events.fromPartial(e)) || [];
-    message.pagination = (object.pagination !== undefined && object.pagination !== null)
-      ? PageResponse.fromPartial(object.pagination)
-      : undefined;
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
+        ? PageResponse.fromPartial(object.pagination)
+        : undefined;
     return message;
   },
 };
@@ -531,274 +638,351 @@ function createBaseQueryGetParticipantRequest(): QueryGetParticipantRequest {
   return { id: 0 };
 }
 
-export const QueryGetParticipantRequest: MessageFns<QueryGetParticipantRequest> = {
-  encode(message: QueryGetParticipantRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.id !== 0) {
-      writer.uint32(8).uint64(message.id);
-    }
-    return writer;
-  },
+export const QueryGetParticipantRequest: MessageFns<QueryGetParticipantRequest> =
+  {
+    encode(
+      message: QueryGetParticipantRequest,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.id !== 0) {
+        writer.uint32(8).uint64(message.id);
+      }
+      return writer;
+    },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetParticipantRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGetParticipantRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 8) {
-            break;
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryGetParticipantRequest {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryGetParticipantRequest();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 8) {
+              break;
+            }
+
+            message.id = longToNumber(reader.uint64());
+            continue;
           }
-
-          message.id = longToNumber(reader.uint64());
-          continue;
         }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      return message;
+    },
+
+    fromJSON(object: any): QueryGetParticipantRequest {
+      return { id: isSet(object.id) ? globalThis.Number(object.id) : 0 };
+    },
+
+    toJSON(message: QueryGetParticipantRequest): unknown {
+      const obj: any = {};
+      if (message.id !== 0) {
+        obj.id = Math.round(message.id);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return obj;
+    },
 
-  fromJSON(object: any): QueryGetParticipantRequest {
-    return { id: isSet(object.id) ? globalThis.Number(object.id) : 0 };
-  },
-
-  toJSON(message: QueryGetParticipantRequest): unknown {
-    const obj: any = {};
-    if (message.id !== 0) {
-      obj.id = Math.round(message.id);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<QueryGetParticipantRequest>, I>>(base?: I): QueryGetParticipantRequest {
-    return QueryGetParticipantRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryGetParticipantRequest>, I>>(object: I): QueryGetParticipantRequest {
-    const message = createBaseQueryGetParticipantRequest();
-    message.id = object.id ?? 0;
-    return message;
-  },
-};
+    create<I extends Exact<DeepPartial<QueryGetParticipantRequest>, I>>(
+      base?: I,
+    ): QueryGetParticipantRequest {
+      return QueryGetParticipantRequest.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryGetParticipantRequest>, I>>(
+      object: I,
+    ): QueryGetParticipantRequest {
+      const message = createBaseQueryGetParticipantRequest();
+      message.id = object.id ?? 0;
+      return message;
+    },
+  };
 
 function createBaseQueryGetParticipantResponse(): QueryGetParticipantResponse {
   return { participant: undefined };
 }
 
-export const QueryGetParticipantResponse: MessageFns<QueryGetParticipantResponse> = {
-  encode(message: QueryGetParticipantResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.participant !== undefined) {
-      Participant.encode(message.participant, writer.uint32(10).fork()).join();
-    }
-    return writer;
-  },
+export const QueryGetParticipantResponse: MessageFns<QueryGetParticipantResponse> =
+  {
+    encode(
+      message: QueryGetParticipantResponse,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.participant !== undefined) {
+        Participant.encode(
+          message.participant,
+          writer.uint32(10).fork(),
+        ).join();
+      }
+      return writer;
+    },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetParticipantResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGetParticipantResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryGetParticipantResponse {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryGetParticipantResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
+
+            message.participant = Participant.decode(reader, reader.uint32());
+            continue;
           }
-
-          message.participant = Participant.decode(reader, reader.uint32());
-          continue;
         }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      return message;
+    },
+
+    fromJSON(object: any): QueryGetParticipantResponse {
+      return {
+        participant: isSet(object.participant)
+          ? Participant.fromJSON(object.participant)
+          : undefined,
+      };
+    },
+
+    toJSON(message: QueryGetParticipantResponse): unknown {
+      const obj: any = {};
+      if (message.participant !== undefined) {
+        obj.participant = Participant.toJSON(message.participant);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return obj;
+    },
 
-  fromJSON(object: any): QueryGetParticipantResponse {
-    return { participant: isSet(object.participant) ? Participant.fromJSON(object.participant) : undefined };
-  },
-
-  toJSON(message: QueryGetParticipantResponse): unknown {
-    const obj: any = {};
-    if (message.participant !== undefined) {
-      obj.participant = Participant.toJSON(message.participant);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<QueryGetParticipantResponse>, I>>(base?: I): QueryGetParticipantResponse {
-    return QueryGetParticipantResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryGetParticipantResponse>, I>>(object: I): QueryGetParticipantResponse {
-    const message = createBaseQueryGetParticipantResponse();
-    message.participant = (object.participant !== undefined && object.participant !== null)
-      ? Participant.fromPartial(object.participant)
-      : undefined;
-    return message;
-  },
-};
+    create<I extends Exact<DeepPartial<QueryGetParticipantResponse>, I>>(
+      base?: I,
+    ): QueryGetParticipantResponse {
+      return QueryGetParticipantResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryGetParticipantResponse>, I>>(
+      object: I,
+    ): QueryGetParticipantResponse {
+      const message = createBaseQueryGetParticipantResponse();
+      message.participant =
+        object.participant !== undefined && object.participant !== null
+          ? Participant.fromPartial(object.participant)
+          : undefined;
+      return message;
+    },
+  };
 
 function createBaseQueryAllParticipantRequest(): QueryAllParticipantRequest {
   return { pagination: undefined };
 }
 
-export const QueryAllParticipantRequest: MessageFns<QueryAllParticipantRequest> = {
-  encode(message: QueryAllParticipantRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.pagination !== undefined) {
-      PageRequest.encode(message.pagination, writer.uint32(10).fork()).join();
-    }
-    return writer;
-  },
+export const QueryAllParticipantRequest: MessageFns<QueryAllParticipantRequest> =
+  {
+    encode(
+      message: QueryAllParticipantRequest,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.pagination !== undefined) {
+        PageRequest.encode(message.pagination, writer.uint32(10).fork()).join();
+      }
+      return writer;
+    },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllParticipantRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryAllParticipantRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryAllParticipantRequest {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryAllParticipantRequest();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
+
+            message.pagination = PageRequest.decode(reader, reader.uint32());
+            continue;
           }
-
-          message.pagination = PageRequest.decode(reader, reader.uint32());
-          continue;
         }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      return message;
+    },
+
+    fromJSON(object: any): QueryAllParticipantRequest {
+      return {
+        pagination: isSet(object.pagination)
+          ? PageRequest.fromJSON(object.pagination)
+          : undefined,
+      };
+    },
+
+    toJSON(message: QueryAllParticipantRequest): unknown {
+      const obj: any = {};
+      if (message.pagination !== undefined) {
+        obj.pagination = PageRequest.toJSON(message.pagination);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return obj;
+    },
 
-  fromJSON(object: any): QueryAllParticipantRequest {
-    return { pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined };
-  },
-
-  toJSON(message: QueryAllParticipantRequest): unknown {
-    const obj: any = {};
-    if (message.pagination !== undefined) {
-      obj.pagination = PageRequest.toJSON(message.pagination);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<QueryAllParticipantRequest>, I>>(base?: I): QueryAllParticipantRequest {
-    return QueryAllParticipantRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryAllParticipantRequest>, I>>(object: I): QueryAllParticipantRequest {
-    const message = createBaseQueryAllParticipantRequest();
-    message.pagination = (object.pagination !== undefined && object.pagination !== null)
-      ? PageRequest.fromPartial(object.pagination)
-      : undefined;
-    return message;
-  },
-};
+    create<I extends Exact<DeepPartial<QueryAllParticipantRequest>, I>>(
+      base?: I,
+    ): QueryAllParticipantRequest {
+      return QueryAllParticipantRequest.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryAllParticipantRequest>, I>>(
+      object: I,
+    ): QueryAllParticipantRequest {
+      const message = createBaseQueryAllParticipantRequest();
+      message.pagination =
+        object.pagination !== undefined && object.pagination !== null
+          ? PageRequest.fromPartial(object.pagination)
+          : undefined;
+      return message;
+    },
+  };
 
 function createBaseQueryAllParticipantResponse(): QueryAllParticipantResponse {
   return { participant: [], pagination: undefined };
 }
 
-export const QueryAllParticipantResponse: MessageFns<QueryAllParticipantResponse> = {
-  encode(message: QueryAllParticipantResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    for (const v of message.participant) {
-      Participant.encode(v!, writer.uint32(10).fork()).join();
-    }
-    if (message.pagination !== undefined) {
-      PageResponse.encode(message.pagination, writer.uint32(18).fork()).join();
-    }
-    return writer;
-  },
-
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllParticipantResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryAllParticipantResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
-          }
-
-          message.participant.push(Participant.decode(reader, reader.uint32()));
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.pagination = PageResponse.decode(reader, reader.uint32());
-          continue;
-        }
+export const QueryAllParticipantResponse: MessageFns<QueryAllParticipantResponse> =
+  {
+    encode(
+      message: QueryAllParticipantResponse,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      for (const v of message.participant) {
+        Participant.encode(v!, writer.uint32(10).fork()).join();
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      if (message.pagination !== undefined) {
+        PageResponse.encode(
+          message.pagination,
+          writer.uint32(18).fork(),
+        ).join();
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return writer;
+    },
 
-  fromJSON(object: any): QueryAllParticipantResponse {
-    return {
-      participant: globalThis.Array.isArray(object?.participant)
-        ? object.participant.map((e: any) => Participant.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
-    };
-  },
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryAllParticipantResponse {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryAllParticipantResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
 
-  toJSON(message: QueryAllParticipantResponse): unknown {
-    const obj: any = {};
-    if (message.participant?.length) {
-      obj.participant = message.participant.map((e) => Participant.toJSON(e));
-    }
-    if (message.pagination !== undefined) {
-      obj.pagination = PageResponse.toJSON(message.pagination);
-    }
-    return obj;
-  },
+            message.participant.push(
+              Participant.decode(reader, reader.uint32()),
+            );
+            continue;
+          }
+          case 2: {
+            if (tag !== 18) {
+              break;
+            }
 
-  create<I extends Exact<DeepPartial<QueryAllParticipantResponse>, I>>(base?: I): QueryAllParticipantResponse {
-    return QueryAllParticipantResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryAllParticipantResponse>, I>>(object: I): QueryAllParticipantResponse {
-    const message = createBaseQueryAllParticipantResponse();
-    message.participant = object.participant?.map((e) => Participant.fromPartial(e)) || [];
-    message.pagination = (object.pagination !== undefined && object.pagination !== null)
-      ? PageResponse.fromPartial(object.pagination)
-      : undefined;
-    return message;
-  },
-};
+            message.pagination = PageResponse.decode(reader, reader.uint32());
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): QueryAllParticipantResponse {
+      return {
+        participant: globalThis.Array.isArray(object?.participant)
+          ? object.participant.map((e: any) => Participant.fromJSON(e))
+          : [],
+        pagination: isSet(object.pagination)
+          ? PageResponse.fromJSON(object.pagination)
+          : undefined,
+      };
+    },
+
+    toJSON(message: QueryAllParticipantResponse): unknown {
+      const obj: any = {};
+      if (message.participant?.length) {
+        obj.participant = message.participant.map((e) => Participant.toJSON(e));
+      }
+      if (message.pagination !== undefined) {
+        obj.pagination = PageResponse.toJSON(message.pagination);
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<QueryAllParticipantResponse>, I>>(
+      base?: I,
+    ): QueryAllParticipantResponse {
+      return QueryAllParticipantResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryAllParticipantResponse>, I>>(
+      object: I,
+    ): QueryAllParticipantResponse {
+      const message = createBaseQueryAllParticipantResponse();
+      message.participant =
+        object.participant?.map((e) => Participant.fromPartial(e)) || [];
+      message.pagination =
+        object.pagination !== undefined && object.pagination !== null
+          ? PageResponse.fromPartial(object.pagination)
+          : undefined;
+      return message;
+    },
+  };
 
 function createBaseQueryGetValidatorRequest(): QueryGetValidatorRequest {
   return { id: 0 };
 }
 
 export const QueryGetValidatorRequest: MessageFns<QueryGetValidatorRequest> = {
-  encode(message: QueryGetValidatorRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: QueryGetValidatorRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.id !== 0) {
       writer.uint32(8).uint64(message.id);
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetValidatorRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): QueryGetValidatorRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetValidatorRequest();
     while (reader.pos < end) {
@@ -833,10 +1017,14 @@ export const QueryGetValidatorRequest: MessageFns<QueryGetValidatorRequest> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryGetValidatorRequest>, I>>(base?: I): QueryGetValidatorRequest {
+  create<I extends Exact<DeepPartial<QueryGetValidatorRequest>, I>>(
+    base?: I,
+  ): QueryGetValidatorRequest {
     return QueryGetValidatorRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<QueryGetValidatorRequest>, I>>(object: I): QueryGetValidatorRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryGetValidatorRequest>, I>>(
+    object: I,
+  ): QueryGetValidatorRequest {
     const message = createBaseQueryGetValidatorRequest();
     message.id = object.id ?? 0;
     return message;
@@ -847,76 +1035,100 @@ function createBaseQueryGetValidatorResponse(): QueryGetValidatorResponse {
   return { validator: undefined };
 }
 
-export const QueryGetValidatorResponse: MessageFns<QueryGetValidatorResponse> = {
-  encode(message: QueryGetValidatorResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.validator !== undefined) {
-      Validator.encode(message.validator, writer.uint32(10).fork()).join();
-    }
-    return writer;
-  },
+export const QueryGetValidatorResponse: MessageFns<QueryGetValidatorResponse> =
+  {
+    encode(
+      message: QueryGetValidatorResponse,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.validator !== undefined) {
+        Validator.encode(message.validator, writer.uint32(10).fork()).join();
+      }
+      return writer;
+    },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetValidatorResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGetValidatorResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryGetValidatorResponse {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryGetValidatorResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
+
+            message.validator = Validator.decode(reader, reader.uint32());
+            continue;
           }
-
-          message.validator = Validator.decode(reader, reader.uint32());
-          continue;
         }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      return message;
+    },
+
+    fromJSON(object: any): QueryGetValidatorResponse {
+      return {
+        validator: isSet(object.validator)
+          ? Validator.fromJSON(object.validator)
+          : undefined,
+      };
+    },
+
+    toJSON(message: QueryGetValidatorResponse): unknown {
+      const obj: any = {};
+      if (message.validator !== undefined) {
+        obj.validator = Validator.toJSON(message.validator);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return obj;
+    },
 
-  fromJSON(object: any): QueryGetValidatorResponse {
-    return { validator: isSet(object.validator) ? Validator.fromJSON(object.validator) : undefined };
-  },
-
-  toJSON(message: QueryGetValidatorResponse): unknown {
-    const obj: any = {};
-    if (message.validator !== undefined) {
-      obj.validator = Validator.toJSON(message.validator);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<QueryGetValidatorResponse>, I>>(base?: I): QueryGetValidatorResponse {
-    return QueryGetValidatorResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryGetValidatorResponse>, I>>(object: I): QueryGetValidatorResponse {
-    const message = createBaseQueryGetValidatorResponse();
-    message.validator = (object.validator !== undefined && object.validator !== null)
-      ? Validator.fromPartial(object.validator)
-      : undefined;
-    return message;
-  },
-};
+    create<I extends Exact<DeepPartial<QueryGetValidatorResponse>, I>>(
+      base?: I,
+    ): QueryGetValidatorResponse {
+      return QueryGetValidatorResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryGetValidatorResponse>, I>>(
+      object: I,
+    ): QueryGetValidatorResponse {
+      const message = createBaseQueryGetValidatorResponse();
+      message.validator =
+        object.validator !== undefined && object.validator !== null
+          ? Validator.fromPartial(object.validator)
+          : undefined;
+      return message;
+    },
+  };
 
 function createBaseQueryAllValidatorRequest(): QueryAllValidatorRequest {
   return { pagination: undefined };
 }
 
 export const QueryAllValidatorRequest: MessageFns<QueryAllValidatorRequest> = {
-  encode(message: QueryAllValidatorRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: QueryAllValidatorRequest,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).join();
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllValidatorRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): QueryAllValidatorRequest {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllValidatorRequest();
     while (reader.pos < end) {
@@ -940,7 +1152,11 @@ export const QueryAllValidatorRequest: MessageFns<QueryAllValidatorRequest> = {
   },
 
   fromJSON(object: any): QueryAllValidatorRequest {
-    return { pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined };
+    return {
+      pagination: isSet(object.pagination)
+        ? PageRequest.fromJSON(object.pagination)
+        : undefined,
+    };
   },
 
   toJSON(message: QueryAllValidatorRequest): unknown {
@@ -951,14 +1167,19 @@ export const QueryAllValidatorRequest: MessageFns<QueryAllValidatorRequest> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryAllValidatorRequest>, I>>(base?: I): QueryAllValidatorRequest {
+  create<I extends Exact<DeepPartial<QueryAllValidatorRequest>, I>>(
+    base?: I,
+  ): QueryAllValidatorRequest {
     return QueryAllValidatorRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<QueryAllValidatorRequest>, I>>(object: I): QueryAllValidatorRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryAllValidatorRequest>, I>>(
+    object: I,
+  ): QueryAllValidatorRequest {
     const message = createBaseQueryAllValidatorRequest();
-    message.pagination = (object.pagination !== undefined && object.pagination !== null)
-      ? PageRequest.fromPartial(object.pagination)
-      : undefined;
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
+        ? PageRequest.fromPartial(object.pagination)
+        : undefined;
     return message;
   },
 };
@@ -967,268 +1188,519 @@ function createBaseQueryAllEventsForValidatorRequest(): QueryAllEventsForValidat
   return {};
 }
 
-export const QueryAllEventsForValidatorRequest: MessageFns<QueryAllEventsForValidatorRequest> = {
-  encode(_: QueryAllEventsForValidatorRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+export const QueryAllEventsForValidatorRequest: MessageFns<QueryAllEventsForValidatorRequest> =
+  {
+    encode(
+      _: QueryAllEventsForValidatorRequest,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      return writer;
+    },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllEventsForValidatorRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryAllEventsForValidatorRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryAllEventsForValidatorRequest {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryAllEventsForValidatorRequest();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return message;
+    },
 
-  fromJSON(_: any): QueryAllEventsForValidatorRequest {
-    return {};
-  },
+    fromJSON(_: any): QueryAllEventsForValidatorRequest {
+      return {};
+    },
 
-  toJSON(_: QueryAllEventsForValidatorRequest): unknown {
-    const obj: any = {};
-    return obj;
-  },
+    toJSON(_: QueryAllEventsForValidatorRequest): unknown {
+      const obj: any = {};
+      return obj;
+    },
 
-  create<I extends Exact<DeepPartial<QueryAllEventsForValidatorRequest>, I>>(
-    base?: I,
-  ): QueryAllEventsForValidatorRequest {
-    return QueryAllEventsForValidatorRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryAllEventsForValidatorRequest>, I>>(
-    _: I,
-  ): QueryAllEventsForValidatorRequest {
-    const message = createBaseQueryAllEventsForValidatorRequest();
-    return message;
-  },
-};
+    create<I extends Exact<DeepPartial<QueryAllEventsForValidatorRequest>, I>>(
+      base?: I,
+    ): QueryAllEventsForValidatorRequest {
+      return QueryAllEventsForValidatorRequest.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<
+      I extends Exact<DeepPartial<QueryAllEventsForValidatorRequest>, I>,
+    >(_: I): QueryAllEventsForValidatorRequest {
+      const message = createBaseQueryAllEventsForValidatorRequest();
+      return message;
+    },
+  };
 
 function createBaseQueryAllValidatorResponse(): QueryAllValidatorResponse {
   return { validator: [], pagination: undefined };
 }
 
-export const QueryAllValidatorResponse: MessageFns<QueryAllValidatorResponse> = {
-  encode(message: QueryAllValidatorResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    for (const v of message.validator) {
-      Validator.encode(v!, writer.uint32(10).fork()).join();
-    }
-    if (message.pagination !== undefined) {
-      PageResponse.encode(message.pagination, writer.uint32(18).fork()).join();
-    }
-    return writer;
-  },
-
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllValidatorResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryAllValidatorResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
-          }
-
-          message.validator.push(Validator.decode(reader, reader.uint32()));
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.pagination = PageResponse.decode(reader, reader.uint32());
-          continue;
-        }
+export const QueryAllValidatorResponse: MessageFns<QueryAllValidatorResponse> =
+  {
+    encode(
+      message: QueryAllValidatorResponse,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      for (const v of message.validator) {
+        Validator.encode(v!, writer.uint32(10).fork()).join();
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      if (message.pagination !== undefined) {
+        PageResponse.encode(
+          message.pagination,
+          writer.uint32(18).fork(),
+        ).join();
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return writer;
+    },
 
-  fromJSON(object: any): QueryAllValidatorResponse {
-    return {
-      validator: globalThis.Array.isArray(object?.validator)
-        ? object.validator.map((e: any) => Validator.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
-    };
-  },
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryAllValidatorResponse {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryAllValidatorResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
 
-  toJSON(message: QueryAllValidatorResponse): unknown {
-    const obj: any = {};
-    if (message.validator?.length) {
-      obj.validator = message.validator.map((e) => Validator.toJSON(e));
-    }
-    if (message.pagination !== undefined) {
-      obj.pagination = PageResponse.toJSON(message.pagination);
-    }
-    return obj;
-  },
+            message.validator.push(Validator.decode(reader, reader.uint32()));
+            continue;
+          }
+          case 2: {
+            if (tag !== 18) {
+              break;
+            }
 
-  create<I extends Exact<DeepPartial<QueryAllValidatorResponse>, I>>(base?: I): QueryAllValidatorResponse {
-    return QueryAllValidatorResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryAllValidatorResponse>, I>>(object: I): QueryAllValidatorResponse {
-    const message = createBaseQueryAllValidatorResponse();
-    message.validator = object.validator?.map((e) => Validator.fromPartial(e)) || [];
-    message.pagination = (object.pagination !== undefined && object.pagination !== null)
-      ? PageResponse.fromPartial(object.pagination)
-      : undefined;
-    return message;
-  },
-};
+            message.pagination = PageResponse.decode(reader, reader.uint32());
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): QueryAllValidatorResponse {
+      return {
+        validator: globalThis.Array.isArray(object?.validator)
+          ? object.validator.map((e: any) => Validator.fromJSON(e))
+          : [],
+        pagination: isSet(object.pagination)
+          ? PageResponse.fromJSON(object.pagination)
+          : undefined,
+      };
+    },
+
+    toJSON(message: QueryAllValidatorResponse): unknown {
+      const obj: any = {};
+      if (message.validator?.length) {
+        obj.validator = message.validator.map((e) => Validator.toJSON(e));
+      }
+      if (message.pagination !== undefined) {
+        obj.pagination = PageResponse.toJSON(message.pagination);
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<QueryAllValidatorResponse>, I>>(
+      base?: I,
+    ): QueryAllValidatorResponse {
+      return QueryAllValidatorResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryAllValidatorResponse>, I>>(
+      object: I,
+    ): QueryAllValidatorResponse {
+      const message = createBaseQueryAllValidatorResponse();
+      message.validator =
+        object.validator?.map((e) => Validator.fromPartial(e)) || [];
+      message.pagination =
+        object.pagination !== undefined && object.pagination !== null
+          ? PageResponse.fromPartial(object.pagination)
+          : undefined;
+      return message;
+    },
+  };
 
 function createBaseQueryParticipantByIdRequest(): QueryParticipantByIdRequest {
   return { eventId: 0, creator: "" };
 }
 
-export const QueryParticipantByIdRequest: MessageFns<QueryParticipantByIdRequest> = {
-  encode(message: QueryParticipantByIdRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.eventId !== 0) {
-      writer.uint32(8).uint64(message.eventId);
-    }
-    if (message.creator !== "") {
-      writer.uint32(18).string(message.creator);
-    }
-    return writer;
-  },
-
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryParticipantByIdRequest {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryParticipantByIdRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 8) {
-            break;
-          }
-
-          message.eventId = longToNumber(reader.uint64());
-          continue;
-        }
-        case 2: {
-          if (tag !== 18) {
-            break;
-          }
-
-          message.creator = reader.string();
-          continue;
-        }
+export const QueryParticipantByIdRequest: MessageFns<QueryParticipantByIdRequest> =
+  {
+    encode(
+      message: QueryParticipantByIdRequest,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.eventId !== 0) {
+        writer.uint32(8).uint64(message.eventId);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      if (message.creator !== "") {
+        writer.uint32(18).string(message.creator);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return writer;
+    },
 
-  fromJSON(object: any): QueryParticipantByIdRequest {
-    return {
-      eventId: isSet(object.eventId)
-        ? globalThis.Number(object.eventId)
-        : isSet(object.event_id)
-        ? globalThis.Number(object.event_id)
-        : 0,
-      creator: isSet(object.creator) ? globalThis.String(object.creator) : "",
-    };
-  },
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryParticipantByIdRequest {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryParticipantByIdRequest();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 8) {
+              break;
+            }
 
-  toJSON(message: QueryParticipantByIdRequest): unknown {
-    const obj: any = {};
-    if (message.eventId !== 0) {
-      obj.eventId = Math.round(message.eventId);
-    }
-    if (message.creator !== "") {
-      obj.creator = message.creator;
-    }
-    return obj;
-  },
+            message.eventId = longToNumber(reader.uint64());
+            continue;
+          }
+          case 2: {
+            if (tag !== 18) {
+              break;
+            }
 
-  create<I extends Exact<DeepPartial<QueryParticipantByIdRequest>, I>>(base?: I): QueryParticipantByIdRequest {
-    return QueryParticipantByIdRequest.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryParticipantByIdRequest>, I>>(object: I): QueryParticipantByIdRequest {
-    const message = createBaseQueryParticipantByIdRequest();
-    message.eventId = object.eventId ?? 0;
-    message.creator = object.creator ?? "";
-    return message;
-  },
-};
+            message.creator = reader.string();
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): QueryParticipantByIdRequest {
+      return {
+        eventId: isSet(object.eventId)
+          ? globalThis.Number(object.eventId)
+          : isSet(object.event_id)
+            ? globalThis.Number(object.event_id)
+            : 0,
+        creator: isSet(object.creator) ? globalThis.String(object.creator) : "",
+      };
+    },
+
+    toJSON(message: QueryParticipantByIdRequest): unknown {
+      const obj: any = {};
+      if (message.eventId !== 0) {
+        obj.eventId = Math.round(message.eventId);
+      }
+      if (message.creator !== "") {
+        obj.creator = message.creator;
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<QueryParticipantByIdRequest>, I>>(
+      base?: I,
+    ): QueryParticipantByIdRequest {
+      return QueryParticipantByIdRequest.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryParticipantByIdRequest>, I>>(
+      object: I,
+    ): QueryParticipantByIdRequest {
+      const message = createBaseQueryParticipantByIdRequest();
+      message.eventId = object.eventId ?? 0;
+      message.creator = object.creator ?? "";
+      return message;
+    },
+  };
 
 function createBaseQueryParticipantByIdResponse(): QueryParticipantByIdResponse {
   return { participant: undefined };
 }
 
-export const QueryParticipantByIdResponse: MessageFns<QueryParticipantByIdResponse> = {
-  encode(message: QueryParticipantByIdResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.participant !== undefined) {
-      Participant.encode(message.participant, writer.uint32(10).fork()).join();
-    }
-    return writer;
-  },
+export const QueryParticipantByIdResponse: MessageFns<QueryParticipantByIdResponse> =
+  {
+    encode(
+      message: QueryParticipantByIdResponse,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.participant !== undefined) {
+        Participant.encode(
+          message.participant,
+          writer.uint32(10).fork(),
+        ).join();
+      }
+      return writer;
+    },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryParticipantByIdResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryParticipantByIdResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1: {
-          if (tag !== 10) {
-            break;
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryParticipantByIdResponse {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryParticipantByIdResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
+
+            message.participant = Participant.decode(reader, reader.uint32());
+            continue;
           }
-
-          message.participant = Participant.decode(reader, reader.uint32());
-          continue;
         }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
+      return message;
+    },
+
+    fromJSON(object: any): QueryParticipantByIdResponse {
+      return {
+        participant: isSet(object.participant)
+          ? Participant.fromJSON(object.participant)
+          : undefined,
+      };
+    },
+
+    toJSON(message: QueryParticipantByIdResponse): unknown {
+      const obj: any = {};
+      if (message.participant !== undefined) {
+        obj.participant = Participant.toJSON(message.participant);
       }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return obj;
+    },
 
-  fromJSON(object: any): QueryParticipantByIdResponse {
-    return { participant: isSet(object.participant) ? Participant.fromJSON(object.participant) : undefined };
-  },
+    create<I extends Exact<DeepPartial<QueryParticipantByIdResponse>, I>>(
+      base?: I,
+    ): QueryParticipantByIdResponse {
+      return QueryParticipantByIdResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryParticipantByIdResponse>, I>>(
+      object: I,
+    ): QueryParticipantByIdResponse {
+      const message = createBaseQueryParticipantByIdResponse();
+      message.participant =
+        object.participant !== undefined && object.participant !== null
+          ? Participant.fromPartial(object.participant)
+          : undefined;
+      return message;
+    },
+  };
 
-  toJSON(message: QueryParticipantByIdResponse): unknown {
-    const obj: any = {};
-    if (message.participant !== undefined) {
-      obj.participant = Participant.toJSON(message.participant);
-    }
-    return obj;
-  },
+function createBaseQueryParticipantStatusRequest(): QueryParticipantStatusRequest {
+  return { eventId: 0, participantId: 0 };
+}
 
-  create<I extends Exact<DeepPartial<QueryParticipantByIdResponse>, I>>(base?: I): QueryParticipantByIdResponse {
-    return QueryParticipantByIdResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<QueryParticipantByIdResponse>, I>>(object: I): QueryParticipantByIdResponse {
-    const message = createBaseQueryParticipantByIdResponse();
-    message.participant = (object.participant !== undefined && object.participant !== null)
-      ? Participant.fromPartial(object.participant)
-      : undefined;
-    return message;
-  },
-};
+export const QueryParticipantStatusRequest: MessageFns<QueryParticipantStatusRequest> =
+  {
+    encode(
+      message: QueryParticipantStatusRequest,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.eventId !== 0) {
+        writer.uint32(8).uint64(message.eventId);
+      }
+      if (message.participantId !== 0) {
+        writer.uint32(16).uint64(message.participantId);
+      }
+      return writer;
+    },
+
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryParticipantStatusRequest {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryParticipantStatusRequest();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 8) {
+              break;
+            }
+
+            message.eventId = longToNumber(reader.uint64());
+            continue;
+          }
+          case 2: {
+            if (tag !== 16) {
+              break;
+            }
+
+            message.participantId = longToNumber(reader.uint64());
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): QueryParticipantStatusRequest {
+      return {
+        eventId: isSet(object.eventId)
+          ? globalThis.Number(object.eventId)
+          : isSet(object.event_id)
+            ? globalThis.Number(object.event_id)
+            : 0,
+        participantId: isSet(object.participantId)
+          ? globalThis.Number(object.participantId)
+          : isSet(object.participant_id)
+            ? globalThis.Number(object.participant_id)
+            : 0,
+      };
+    },
+
+    toJSON(message: QueryParticipantStatusRequest): unknown {
+      const obj: any = {};
+      if (message.eventId !== 0) {
+        obj.eventId = Math.round(message.eventId);
+      }
+      if (message.participantId !== 0) {
+        obj.participantId = Math.round(message.participantId);
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<QueryParticipantStatusRequest>, I>>(
+      base?: I,
+    ): QueryParticipantStatusRequest {
+      return QueryParticipantStatusRequest.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<QueryParticipantStatusRequest>, I>>(
+      object: I,
+    ): QueryParticipantStatusRequest {
+      const message = createBaseQueryParticipantStatusRequest();
+      message.eventId = object.eventId ?? 0;
+      message.participantId = object.participantId ?? 0;
+      return message;
+    },
+  };
+
+function createBaseQueryParticipantStatusResponse(): QueryParticipantStatusResponse {
+  return { eventStatus: "", resultAmount: 0 };
+}
+
+export const QueryParticipantStatusResponse: MessageFns<QueryParticipantStatusResponse> =
+  {
+    encode(
+      message: QueryParticipantStatusResponse,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      if (message.eventStatus !== "") {
+        writer.uint32(10).string(message.eventStatus);
+      }
+      if (message.resultAmount !== 0) {
+        writer.uint32(16).uint64(message.resultAmount);
+      }
+      return writer;
+    },
+
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): QueryParticipantStatusResponse {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseQueryParticipantStatusResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1: {
+            if (tag !== 10) {
+              break;
+            }
+
+            message.eventStatus = reader.string();
+            continue;
+          }
+          case 2: {
+            if (tag !== 16) {
+              break;
+            }
+
+            message.resultAmount = longToNumber(reader.uint64());
+            continue;
+          }
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(object: any): QueryParticipantStatusResponse {
+      return {
+        eventStatus: isSet(object.eventStatus)
+          ? globalThis.String(object.eventStatus)
+          : isSet(object.event_status)
+            ? globalThis.String(object.event_status)
+            : "",
+        resultAmount: isSet(object.resultAmount)
+          ? globalThis.Number(object.resultAmount)
+          : isSet(object.result_amount)
+            ? globalThis.Number(object.result_amount)
+            : 0,
+      };
+    },
+
+    toJSON(message: QueryParticipantStatusResponse): unknown {
+      const obj: any = {};
+      if (message.eventStatus !== "") {
+        obj.eventStatus = message.eventStatus;
+      }
+      if (message.resultAmount !== 0) {
+        obj.resultAmount = Math.round(message.resultAmount);
+      }
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<QueryParticipantStatusResponse>, I>>(
+      base?: I,
+    ): QueryParticipantStatusResponse {
+      return QueryParticipantStatusResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<
+      I extends Exact<DeepPartial<QueryParticipantStatusResponse>, I>,
+    >(object: I): QueryParticipantStatusResponse {
+      const message = createBaseQueryParticipantStatusResponse();
+      message.eventStatus = object.eventStatus ?? "";
+      message.resultAmount = object.resultAmount ?? 0;
+      return message;
+    },
+  };
 
 /** Query defines the gRPC querier service. */
 export interface Query {
@@ -1239,17 +1711,33 @@ export interface Query {
   /** ListEvents defines the ListEvents RPC. */
   ListEvents(request: QueryAllEventsRequest): Promise<QueryAllEventsResponse>;
   /** ListParticipant Queries a list of Participant items. */
-  GetParticipant(request: QueryGetParticipantRequest): Promise<QueryGetParticipantResponse>;
+  GetParticipant(
+    request: QueryGetParticipantRequest,
+  ): Promise<QueryGetParticipantResponse>;
   /** ListParticipant defines the ListParticipant RPC. */
-  ListParticipant(request: QueryAllParticipantRequest): Promise<QueryAllParticipantResponse>;
+  ListParticipant(
+    request: QueryAllParticipantRequest,
+  ): Promise<QueryAllParticipantResponse>;
   /** ListValidator Queries a list of Validator items. */
-  GetValidator(request: QueryGetValidatorRequest): Promise<QueryGetValidatorResponse>;
+  GetValidator(
+    request: QueryGetValidatorRequest,
+  ): Promise<QueryGetValidatorResponse>;
   /** ListValidator defines the ListValidator RPC. */
-  ListValidator(request: QueryAllValidatorRequest): Promise<QueryAllValidatorResponse>;
+  ListValidator(
+    request: QueryAllValidatorRequest,
+  ): Promise<QueryAllValidatorResponse>;
   /** ListEventsForValidator defines the ListValidator RPC. */
-  ListEventsForValidator(request: QueryAllEventsForValidatorRequest): Promise<QueryEventsForValidatorResponse>;
+  ListEventsForValidator(
+    request: QueryAllEventsForValidatorRequest,
+  ): Promise<QueryEventsForValidatorResponse>;
   /** ParticipantById Queries a list of ParticipantById items. */
-  ParticipantById(request: QueryParticipantByIdRequest): Promise<QueryParticipantByIdResponse>;
+  ParticipantById(
+    request: QueryParticipantByIdRequest,
+  ): Promise<QueryParticipantByIdResponse>;
+  /** ParticipantStatus Queries a list of ParticipantStatus items. */
+  ParticipantStatus(
+    request: QueryParticipantStatusRequest,
+  ): Promise<QueryParticipantStatusResponse>;
 }
 
 export const QueryServiceName = "bettery.events.v1.Query";
@@ -1268,77 +1756,140 @@ export class QueryClientImpl implements Query {
     this.ListValidator = this.ListValidator.bind(this);
     this.ListEventsForValidator = this.ListEventsForValidator.bind(this);
     this.ParticipantById = this.ParticipantById.bind(this);
+    this.ParticipantStatus = this.ParticipantStatus.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "Params", data);
-    return promise.then((data) => QueryParamsResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      QueryParamsResponse.decode(new BinaryReader(data)),
+    );
   }
 
   GetEvents(request: QueryGetEventsRequest): Promise<QueryGetEventsResponse> {
     const data = QueryGetEventsRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "GetEvents", data);
-    return promise.then((data) => QueryGetEventsResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      QueryGetEventsResponse.decode(new BinaryReader(data)),
+    );
   }
 
   ListEvents(request: QueryAllEventsRequest): Promise<QueryAllEventsResponse> {
     const data = QueryAllEventsRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "ListEvents", data);
-    return promise.then((data) => QueryAllEventsResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      QueryAllEventsResponse.decode(new BinaryReader(data)),
+    );
   }
 
-  GetParticipant(request: QueryGetParticipantRequest): Promise<QueryGetParticipantResponse> {
+  GetParticipant(
+    request: QueryGetParticipantRequest,
+  ): Promise<QueryGetParticipantResponse> {
     const data = QueryGetParticipantRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "GetParticipant", data);
-    return promise.then((data) => QueryGetParticipantResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      QueryGetParticipantResponse.decode(new BinaryReader(data)),
+    );
   }
 
-  ListParticipant(request: QueryAllParticipantRequest): Promise<QueryAllParticipantResponse> {
+  ListParticipant(
+    request: QueryAllParticipantRequest,
+  ): Promise<QueryAllParticipantResponse> {
     const data = QueryAllParticipantRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "ListParticipant", data);
-    return promise.then((data) => QueryAllParticipantResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      QueryAllParticipantResponse.decode(new BinaryReader(data)),
+    );
   }
 
-  GetValidator(request: QueryGetValidatorRequest): Promise<QueryGetValidatorResponse> {
+  GetValidator(
+    request: QueryGetValidatorRequest,
+  ): Promise<QueryGetValidatorResponse> {
     const data = QueryGetValidatorRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "GetValidator", data);
-    return promise.then((data) => QueryGetValidatorResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      QueryGetValidatorResponse.decode(new BinaryReader(data)),
+    );
   }
 
-  ListValidator(request: QueryAllValidatorRequest): Promise<QueryAllValidatorResponse> {
+  ListValidator(
+    request: QueryAllValidatorRequest,
+  ): Promise<QueryAllValidatorResponse> {
     const data = QueryAllValidatorRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "ListValidator", data);
-    return promise.then((data) => QueryAllValidatorResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      QueryAllValidatorResponse.decode(new BinaryReader(data)),
+    );
   }
 
-  ListEventsForValidator(request: QueryAllEventsForValidatorRequest): Promise<QueryEventsForValidatorResponse> {
+  ListEventsForValidator(
+    request: QueryAllEventsForValidatorRequest,
+  ): Promise<QueryEventsForValidatorResponse> {
     const data = QueryAllEventsForValidatorRequest.encode(request).finish();
-    const promise = this.rpc.request(this.service, "ListEventsForValidator", data);
-    return promise.then((data) => QueryEventsForValidatorResponse.decode(new BinaryReader(data)));
+    const promise = this.rpc.request(
+      this.service,
+      "ListEventsForValidator",
+      data,
+    );
+    return promise.then((data) =>
+      QueryEventsForValidatorResponse.decode(new BinaryReader(data)),
+    );
   }
 
-  ParticipantById(request: QueryParticipantByIdRequest): Promise<QueryParticipantByIdResponse> {
+  ParticipantById(
+    request: QueryParticipantByIdRequest,
+  ): Promise<QueryParticipantByIdResponse> {
     const data = QueryParticipantByIdRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "ParticipantById", data);
-    return promise.then((data) => QueryParticipantByIdResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      QueryParticipantByIdResponse.decode(new BinaryReader(data)),
+    );
+  }
+
+  ParticipantStatus(
+    request: QueryParticipantStatusRequest,
+  ): Promise<QueryParticipantStatusResponse> {
+    const data = QueryParticipantStatusRequest.encode(request).finish();
+    const promise = this.rpc.request(this.service, "ParticipantStatus", data);
+    return promise.then((data) =>
+      QueryParticipantStatusResponse.decode(new BinaryReader(data)),
+    );
   }
 }
 
 interface Rpc {
-  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
+  request(
+    service: string,
+    method: string,
+    data: Uint8Array,
+  ): Promise<Uint8Array>;
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends globalThis.Array<infer U>
+    ? globalThis.Array<DeepPartial<U>>
+    : T extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepPartial<U>>
+      : T extends {}
+        ? { [K in keyof T]?: DeepPartial<T[K]> }
+        : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function longToNumber(int64: { toString(): string }): number {
   const num = globalThis.Number(int64.toString());

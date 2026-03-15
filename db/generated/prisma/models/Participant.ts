@@ -52,6 +52,7 @@ export type ParticipantMinAggregateOutputType = {
   result: bigint | null
   status: string | null
   createdAt: bigint | null
+  paid: boolean | null
   increase: boolean | null
 }
 
@@ -65,6 +66,7 @@ export type ParticipantMaxAggregateOutputType = {
   result: bigint | null
   status: string | null
   createdAt: bigint | null
+  paid: boolean | null
   increase: boolean | null
 }
 
@@ -78,6 +80,7 @@ export type ParticipantCountAggregateOutputType = {
   result: number
   status: number
   createdAt: number
+  paid: number
   increase: number
   _all: number
 }
@@ -109,6 +112,7 @@ export type ParticipantMinAggregateInputType = {
   result?: true
   status?: true
   createdAt?: true
+  paid?: true
   increase?: true
 }
 
@@ -122,6 +126,7 @@ export type ParticipantMaxAggregateInputType = {
   result?: true
   status?: true
   createdAt?: true
+  paid?: true
   increase?: true
 }
 
@@ -135,6 +140,7 @@ export type ParticipantCountAggregateInputType = {
   result?: true
   status?: true
   createdAt?: true
+  paid?: true
   increase?: true
   _all?: true
 }
@@ -235,6 +241,7 @@ export type ParticipantGroupByOutputType = {
   result: bigint
   status: string
   createdAt: bigint
+  paid: boolean
   increase: boolean
   _count: ParticipantCountAggregateOutputType | null
   _avg: ParticipantAvgAggregateOutputType | null
@@ -271,6 +278,7 @@ export type ParticipantWhereInput = {
   result?: Prisma.BigIntFilter<"Participant"> | bigint | number
   status?: Prisma.StringFilter<"Participant"> | string
   createdAt?: Prisma.BigIntFilter<"Participant"> | bigint | number
+  paid?: Prisma.BoolFilter<"Participant"> | boolean
   increase?: Prisma.BoolFilter<"Participant"> | boolean
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
 }
@@ -285,6 +293,7 @@ export type ParticipantOrderByWithRelationInput = {
   result?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  paid?: Prisma.SortOrder
   increase?: Prisma.SortOrder
   event?: Prisma.EventOrderByWithRelationInput
 }
@@ -302,6 +311,7 @@ export type ParticipantWhereUniqueInput = Prisma.AtLeast<{
   result?: Prisma.BigIntFilter<"Participant"> | bigint | number
   status?: Prisma.StringFilter<"Participant"> | string
   createdAt?: Prisma.BigIntFilter<"Participant"> | bigint | number
+  paid?: Prisma.BoolFilter<"Participant"> | boolean
   increase?: Prisma.BoolFilter<"Participant"> | boolean
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
 }, "id">
@@ -316,6 +326,7 @@ export type ParticipantOrderByWithAggregationInput = {
   result?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  paid?: Prisma.SortOrder
   increase?: Prisma.SortOrder
   _count?: Prisma.ParticipantCountOrderByAggregateInput
   _avg?: Prisma.ParticipantAvgOrderByAggregateInput
@@ -337,6 +348,7 @@ export type ParticipantScalarWhereWithAggregatesInput = {
   result?: Prisma.BigIntWithAggregatesFilter<"Participant"> | bigint | number
   status?: Prisma.StringWithAggregatesFilter<"Participant"> | string
   createdAt?: Prisma.BigIntWithAggregatesFilter<"Participant"> | bigint | number
+  paid?: Prisma.BoolWithAggregatesFilter<"Participant"> | boolean
   increase?: Prisma.BoolWithAggregatesFilter<"Participant"> | boolean
 }
 
@@ -349,7 +361,8 @@ export type ParticipantCreateInput = {
   result: bigint | number
   status: string
   createdAt: bigint | number
-  increase: boolean
+  paid: boolean
+  increase?: boolean
   event: Prisma.EventCreateNestedOneWithoutBetsInput
 }
 
@@ -363,7 +376,8 @@ export type ParticipantUncheckedCreateInput = {
   result: bigint | number
   status: string
   createdAt: bigint | number
-  increase: boolean
+  paid: boolean
+  increase?: boolean
 }
 
 export type ParticipantUpdateInput = {
@@ -375,6 +389,7 @@ export type ParticipantUpdateInput = {
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   increase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   event?: Prisma.EventUpdateOneRequiredWithoutBetsNestedInput
 }
@@ -389,6 +404,7 @@ export type ParticipantUncheckedUpdateInput = {
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   increase?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -402,7 +418,8 @@ export type ParticipantCreateManyInput = {
   result: bigint | number
   status: string
   createdAt: bigint | number
-  increase: boolean
+  paid: boolean
+  increase?: boolean
 }
 
 export type ParticipantUpdateManyMutationInput = {
@@ -414,6 +431,7 @@ export type ParticipantUpdateManyMutationInput = {
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   increase?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -427,6 +445,7 @@ export type ParticipantUncheckedUpdateManyInput = {
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   increase?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -450,6 +469,7 @@ export type ParticipantCountOrderByAggregateInput = {
   result?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  paid?: Prisma.SortOrder
   increase?: Prisma.SortOrder
 }
 
@@ -471,6 +491,7 @@ export type ParticipantMaxOrderByAggregateInput = {
   result?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  paid?: Prisma.SortOrder
   increase?: Prisma.SortOrder
 }
 
@@ -484,6 +505,7 @@ export type ParticipantMinOrderByAggregateInput = {
   result?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  paid?: Prisma.SortOrder
   increase?: Prisma.SortOrder
 }
 
@@ -550,7 +572,8 @@ export type ParticipantCreateWithoutEventInput = {
   result: bigint | number
   status: string
   createdAt: bigint | number
-  increase: boolean
+  paid: boolean
+  increase?: boolean
 }
 
 export type ParticipantUncheckedCreateWithoutEventInput = {
@@ -562,7 +585,8 @@ export type ParticipantUncheckedCreateWithoutEventInput = {
   result: bigint | number
   status: string
   createdAt: bigint | number
-  increase: boolean
+  paid: boolean
+  increase?: boolean
 }
 
 export type ParticipantCreateOrConnectWithoutEventInput = {
@@ -604,6 +628,7 @@ export type ParticipantScalarWhereInput = {
   result?: Prisma.BigIntFilter<"Participant"> | bigint | number
   status?: Prisma.StringFilter<"Participant"> | string
   createdAt?: Prisma.BigIntFilter<"Participant"> | bigint | number
+  paid?: Prisma.BoolFilter<"Participant"> | boolean
   increase?: Prisma.BoolFilter<"Participant"> | boolean
 }
 
@@ -616,7 +641,8 @@ export type ParticipantCreateManyEventInput = {
   result: bigint | number
   status: string
   createdAt: bigint | number
-  increase: boolean
+  paid: boolean
+  increase?: boolean
 }
 
 export type ParticipantUpdateWithoutEventInput = {
@@ -628,6 +654,7 @@ export type ParticipantUpdateWithoutEventInput = {
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   increase?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -640,6 +667,7 @@ export type ParticipantUncheckedUpdateWithoutEventInput = {
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   increase?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -652,6 +680,7 @@ export type ParticipantUncheckedUpdateManyWithoutEventInput = {
   result?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   increase?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -667,6 +696,7 @@ export type ParticipantSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   result?: boolean
   status?: boolean
   createdAt?: boolean
+  paid?: boolean
   increase?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["participant"]>
@@ -681,6 +711,7 @@ export type ParticipantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   result?: boolean
   status?: boolean
   createdAt?: boolean
+  paid?: boolean
   increase?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["participant"]>
@@ -695,6 +726,7 @@ export type ParticipantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   result?: boolean
   status?: boolean
   createdAt?: boolean
+  paid?: boolean
   increase?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["participant"]>
@@ -709,10 +741,11 @@ export type ParticipantSelectScalar = {
   result?: boolean
   status?: boolean
   createdAt?: boolean
+  paid?: boolean
   increase?: boolean
 }
 
-export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creator" | "eventId" | "answer" | "amount" | "token" | "result" | "status" | "createdAt" | "increase", ExtArgs["result"]["participant"]>
+export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creator" | "eventId" | "answer" | "amount" | "token" | "result" | "status" | "createdAt" | "paid" | "increase", ExtArgs["result"]["participant"]>
 export type ParticipantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }
@@ -738,6 +771,7 @@ export type $ParticipantPayload<ExtArgs extends runtime.Types.Extensions.Interna
     result: bigint
     status: string
     createdAt: bigint
+    paid: boolean
     increase: boolean
   }, ExtArgs["result"]["participant"]>
   composites: {}
@@ -1172,6 +1206,7 @@ export interface ParticipantFieldRefs {
   readonly result: Prisma.FieldRef<"Participant", 'BigInt'>
   readonly status: Prisma.FieldRef<"Participant", 'String'>
   readonly createdAt: Prisma.FieldRef<"Participant", 'BigInt'>
+  readonly paid: Prisma.FieldRef<"Participant", 'Boolean'>
   readonly increase: Prisma.FieldRef<"Participant", 'Boolean'>
 }
     

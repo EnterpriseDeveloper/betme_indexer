@@ -35,6 +35,7 @@ export interface ValidateEventPayload {
   createdAt: bigint;
   refunded: boolean;
   companyFee: bigint;
+  creatorFee: bigint;
 }
 
 export interface SetIncreasePartEventPayload {
@@ -44,4 +45,11 @@ export interface SetIncreasePartEventPayload {
   amount: bigint;
   token: string;
   createdAt: bigint;
+}
+
+export interface PaidMoneyPartEventPayload {
+  creator: string;
+  eventId: bigint;
+  partId: bigint;
+  amount: bigint;
 }

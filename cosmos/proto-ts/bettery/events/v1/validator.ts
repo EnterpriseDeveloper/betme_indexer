@@ -18,14 +18,27 @@ export interface Validator {
   refunded: boolean;
   companyAmount: string;
   createdAt: number;
+  creatorAmount: string;
 }
 
 function createBaseValidator(): Validator {
-  return { id: 0, eventId: 0, answer: "", source: "", refunded: false, companyAmount: "", createdAt: 0 };
+  return {
+    id: 0,
+    eventId: 0,
+    answer: "",
+    source: "",
+    refunded: false,
+    companyAmount: "",
+    createdAt: 0,
+    creatorAmount: "",
+  };
 }
 
 export const Validator: MessageFns<Validator> = {
-  encode(message: Validator, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: Validator,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.id !== 0) {
       writer.uint32(8).uint64(message.id);
     }
@@ -47,11 +60,15 @@ export const Validator: MessageFns<Validator> = {
     if (message.createdAt !== 0) {
       writer.uint32(56).uint64(message.createdAt);
     }
+    if (message.creatorAmount !== "") {
+      writer.uint32(66).string(message.creatorAmount);
+    }
     return writer;
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): Validator {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidator();
     while (reader.pos < end) {
@@ -113,6 +130,14 @@ export const Validator: MessageFns<Validator> = {
           message.createdAt = longToNumber(reader.uint64());
           continue;
         }
+        case 8: {
+          if (tag !== 66) {
+            break;
+          }
+
+          message.creatorAmount = reader.string();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -128,21 +153,28 @@ export const Validator: MessageFns<Validator> = {
       eventId: isSet(object.eventId)
         ? globalThis.Number(object.eventId)
         : isSet(object.event_id)
-        ? globalThis.Number(object.event_id)
-        : 0,
+          ? globalThis.Number(object.event_id)
+          : 0,
       answer: isSet(object.answer) ? globalThis.String(object.answer) : "",
       source: isSet(object.source) ? globalThis.String(object.source) : "",
-      refunded: isSet(object.refunded) ? globalThis.Boolean(object.refunded) : false,
+      refunded: isSet(object.refunded)
+        ? globalThis.Boolean(object.refunded)
+        : false,
       companyAmount: isSet(object.companyAmount)
         ? globalThis.String(object.companyAmount)
         : isSet(object.company_amount)
-        ? globalThis.String(object.company_amount)
-        : "",
+          ? globalThis.String(object.company_amount)
+          : "",
       createdAt: isSet(object.createdAt)
         ? globalThis.Number(object.createdAt)
         : isSet(object.created_at)
-        ? globalThis.Number(object.created_at)
-        : 0,
+          ? globalThis.Number(object.created_at)
+          : 0,
+      creatorAmount: isSet(object.creatorAmount)
+        ? globalThis.String(object.creatorAmount)
+        : isSet(object.creator_amount)
+          ? globalThis.String(object.creator_amount)
+          : "",
     };
   },
 
@@ -169,13 +201,18 @@ export const Validator: MessageFns<Validator> = {
     if (message.createdAt !== 0) {
       obj.createdAt = Math.round(message.createdAt);
     }
+    if (message.creatorAmount !== "") {
+      obj.creatorAmount = message.creatorAmount;
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<Validator>, I>>(base?: I): Validator {
     return Validator.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<Validator>, I>>(object: I): Validator {
+  fromPartial<I extends Exact<DeepPartial<Validator>, I>>(
+    object: I,
+  ): Validator {
     const message = createBaseValidator();
     message.id = object.id ?? 0;
     message.eventId = object.eventId ?? 0;
@@ -184,21 +221,36 @@ export const Validator: MessageFns<Validator> = {
     message.refunded = object.refunded ?? false;
     message.companyAmount = object.companyAmount ?? "";
     message.createdAt = object.createdAt ?? 0;
+    message.creatorAmount = object.creatorAmount ?? "";
     return message;
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends globalThis.Array<infer U>
+    ? globalThis.Array<DeepPartial<U>>
+    : T extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepPartial<U>>
+      : T extends {}
+        ? { [K in keyof T]?: DeepPartial<T[K]> }
+        : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function longToNumber(int64: { toString(): string }): number {
   const num = globalThis.Number(int64.toString());

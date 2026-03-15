@@ -1,10 +1,11 @@
 import { PrismaClient } from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import {
+  PaidMoneyPartEventPayload,
   ParticipateEventPayload,
   SetIncreasePartEventPayload,
 } from "../parser/types";
-import getParticipantByID from "../cosmos/cosmos";
+import getParticipantStatusByID from "../cosmos/cosmos";
 import { EventStatus } from "./types";
 import { formatUnits } from "viem";
 
@@ -21,6 +22,7 @@ export interface PartRepository {
     refunded: boolean,
   ): Promise<void>;
   setIncreasePart(payload: SetIncreasePartEventPayload): Promise<void>;
+  setPaidMoneyPart(payload: PaidMoneyPartEventPayload): Promise<void>;
 }
 
 export class PartPrismaRepository implements PartRepository {
@@ -39,6 +41,7 @@ export class PartPrismaRepository implements PartRepository {
             result: 0,
             createdAt: payload.createdAt,
             increase: false,
+            paid: false,
           },
         });
 
@@ -82,15 +85,20 @@ export class PartPrismaRepository implements PartRepository {
         });
 
         for (const participant of participants) {
-          let part = await getParticipantByID(Number(participant.id));
+          let part = await getParticipantStatusByID(
+            Number(participant.id),
+            eventId,
+          );
           if (part) {
             await tx.participant.update({
               where: { id: eventId },
               data: {
                 result:
-                  part.result === 0
+                  part.resultAmount === 0
                     ? BigInt(0)
-                    : BigInt(Number(formatUnits(BigInt(part.result), 6)) * 100),
+                    : BigInt(
+                        Number(formatUnits(BigInt(part.resultAmount), 6)) * 100,
+                      ),
                 status: refunded ? EventStatus.REFUNDED : EventStatus.FINISHED,
               },
             });
@@ -127,6 +135,7 @@ export class PartPrismaRepository implements PartRepository {
             result: 0,
             createdAt: payload.createdAt,
             increase: true,
+            paid: false,
           },
         });
 
@@ -156,6 +165,21 @@ export class PartPrismaRepository implements PartRepository {
       });
     } catch (e) {
       console.log(`setIncreasePart: ${e}`);
+    }
+  }
+
+  async setPaidMoneyPart(payload: PaidMoneyPartEventPayload): Promise<void> {
+    try {
+      await prisma.$transaction(async (tx) => {
+        await tx.participant.update({
+          where: { id: payload.partId },
+          data: {
+            paid: true,
+          },
+        });
+      });
+    } catch (e) {
+      console.log(`setPaidMoneyPart: ${e}`);
     }
   }
 }

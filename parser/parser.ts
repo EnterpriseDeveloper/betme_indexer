@@ -6,6 +6,7 @@ import { ValRepository } from "../db/valRepository";
 import {
   parseCreateEvent,
   parseDepositEvent,
+  parsePaidMoneyPartEvent,
   parseParticipateEvent,
   parseSetIncreasePartEvent,
   parseWithdrawalEvent,
@@ -19,6 +20,7 @@ const EVENT_TYPES = {
   WITHDRAWAL_EVENT: "BURN_TO_EVM",
   DEPOSIT_EVENT: "MINT_FROM_EVM",
   SET_INCREASE_PART: "SET_INCREASE_PART",
+  PAID_MONEY_PART: "PAID_MONEY_PART",
 } as const;
 
 export class EventParser {
@@ -54,6 +56,10 @@ export class EventParser {
 
           case EVENT_TYPES.SET_INCREASE_PART:
             await this.parseSetIncreasePart(raw);
+            break;
+
+          case EVENT_TYPES.PAID_MONEY_PART:
+            await this.parsePaidMoneyPart(raw);
             break;
           // default:
           //   console.warn("UNKNOWN EVENT", {
@@ -108,5 +114,11 @@ export class EventParser {
     console.log("SET_INCREASE_PART", JSON.stringify(raw));
     const payload = parseSetIncreasePartEvent(raw.attributes);
     await this.partDb.setIncreasePart(payload);
+  }
+
+  private async parsePaidMoneyPart(raw: RawEvent) {
+    console.log("PAID_MONEY_PART", JSON.stringify(raw));
+    const payload = parsePaidMoneyPartEvent(raw.attributes);
+    await this.partDb.setPaidMoneyPart(payload);
   }
 }

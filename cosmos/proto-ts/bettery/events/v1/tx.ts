@@ -22,8 +22,7 @@ export interface MsgUpdateParams {
  * MsgUpdateParamsResponse defines the response structure for executing a
  * MsgUpdateParams message.
  */
-export interface MsgUpdateParamsResponse {
-}
+export interface MsgUpdateParamsResponse {}
 
 /** MsgCreateEvent defines the MsgCreateEvent message. */
 export interface MsgCreateEvent {
@@ -49,8 +48,7 @@ export interface MsgCreatePartEvent {
 }
 
 /** MsgCreatePartEventResponse defines the MsgCreatePartEventResponse message. */
-export interface MsgCreatePartEventResponse {
-}
+export interface MsgCreatePartEventResponse {}
 
 /** MsgValidateEvent defines the MsgValidateEvent message. */
 export interface MsgValidateEvent {
@@ -61,15 +59,38 @@ export interface MsgValidateEvent {
 }
 
 /** MsgValidateEventResponse defines the MsgValidateEventResponse message. */
-export interface MsgValidateEventResponse {
+export interface MsgValidateEventResponse {}
+
+/** MsgSetIncreasePart defines the MsgSetIncreasePart message. */
+export interface MsgSetIncreasePart {
+  creator: string;
+  eventId: number;
+  amount: string;
+  partId: number;
 }
+
+/** MsgSetIncreasePartResponse defines the MsgSetIncreasePartResponse message. */
+export interface MsgSetIncreasePartResponse {}
+
+/** MsgGetMoneyPart defines the MsgGetMoneyPart message. */
+export interface MsgGetMoneyPart {
+  creator: string;
+  eventId: string;
+  partId: string;
+}
+
+/** MsgGetMoneyPartResponse defines the MsgGetMoneyPartResponse message. */
+export interface MsgGetMoneyPartResponse {}
 
 function createBaseMsgUpdateParams(): MsgUpdateParams {
   return { authority: "", params: undefined };
 }
 
 export const MsgUpdateParams: MessageFns<MsgUpdateParams> = {
-  encode(message: MsgUpdateParams, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: MsgUpdateParams,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.authority !== "") {
       writer.uint32(10).string(message.authority);
     }
@@ -80,7 +101,8 @@ export const MsgUpdateParams: MessageFns<MsgUpdateParams> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateParams {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateParams();
     while (reader.pos < end) {
@@ -113,7 +135,9 @@ export const MsgUpdateParams: MessageFns<MsgUpdateParams> = {
 
   fromJSON(object: any): MsgUpdateParams {
     return {
-      authority: isSet(object.authority) ? globalThis.String(object.authority) : "",
+      authority: isSet(object.authority)
+        ? globalThis.String(object.authority)
+        : "",
       params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
     };
   },
@@ -129,15 +153,20 @@ export const MsgUpdateParams: MessageFns<MsgUpdateParams> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgUpdateParams>, I>>(base?: I): MsgUpdateParams {
+  create<I extends Exact<DeepPartial<MsgUpdateParams>, I>>(
+    base?: I,
+  ): MsgUpdateParams {
     return MsgUpdateParams.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateParams>, I>>(object: I): MsgUpdateParams {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateParams>, I>>(
+    object: I,
+  ): MsgUpdateParams {
     const message = createBaseMsgUpdateParams();
     message.authority = object.authority ?? "";
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
+    message.params =
+      object.params !== undefined && object.params !== null
+        ? Params.fromPartial(object.params)
+        : undefined;
     return message;
   },
 };
@@ -147,12 +176,19 @@ function createBaseMsgUpdateParamsResponse(): MsgUpdateParamsResponse {
 }
 
 export const MsgUpdateParamsResponse: MessageFns<MsgUpdateParamsResponse> = {
-  encode(_: MsgUpdateParamsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    _: MsgUpdateParamsResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateParamsResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): MsgUpdateParamsResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateParamsResponse();
     while (reader.pos < end) {
@@ -176,21 +212,35 @@ export const MsgUpdateParamsResponse: MessageFns<MsgUpdateParamsResponse> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgUpdateParamsResponse>, I>>(base?: I): MsgUpdateParamsResponse {
+  create<I extends Exact<DeepPartial<MsgUpdateParamsResponse>, I>>(
+    base?: I,
+  ): MsgUpdateParamsResponse {
     return MsgUpdateParamsResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateParamsResponse>, I>>(_: I): MsgUpdateParamsResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateParamsResponse>, I>>(
+    _: I,
+  ): MsgUpdateParamsResponse {
     const message = createBaseMsgUpdateParamsResponse();
     return message;
   },
 };
 
 function createBaseMsgCreateEvent(): MsgCreateEvent {
-  return { creator: "", question: "", answers: [], endTime: 0, category: "", roomId: "" };
+  return {
+    creator: "",
+    question: "",
+    answers: [],
+    endTime: 0,
+    category: "",
+    roomId: "",
+  };
 }
 
 export const MsgCreateEvent: MessageFns<MsgCreateEvent> = {
-  encode(message: MsgCreateEvent, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: MsgCreateEvent,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -213,7 +263,8 @@ export const MsgCreateEvent: MessageFns<MsgCreateEvent> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateEvent {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateEvent();
     while (reader.pos < end) {
@@ -279,19 +330,25 @@ export const MsgCreateEvent: MessageFns<MsgCreateEvent> = {
   fromJSON(object: any): MsgCreateEvent {
     return {
       creator: isSet(object.creator) ? globalThis.String(object.creator) : "",
-      question: isSet(object.question) ? globalThis.String(object.question) : "",
-      answers: globalThis.Array.isArray(object?.answers) ? object.answers.map((e: any) => globalThis.String(e)) : [],
+      question: isSet(object.question)
+        ? globalThis.String(object.question)
+        : "",
+      answers: globalThis.Array.isArray(object?.answers)
+        ? object.answers.map((e: any) => globalThis.String(e))
+        : [],
       endTime: isSet(object.endTime)
         ? globalThis.Number(object.endTime)
         : isSet(object.end_time)
-        ? globalThis.Number(object.end_time)
-        : 0,
-      category: isSet(object.category) ? globalThis.String(object.category) : "",
+          ? globalThis.Number(object.end_time)
+          : 0,
+      category: isSet(object.category)
+        ? globalThis.String(object.category)
+        : "",
       roomId: isSet(object.roomId)
         ? globalThis.String(object.roomId)
         : isSet(object.room_id)
-        ? globalThis.String(object.room_id)
-        : "",
+          ? globalThis.String(object.room_id)
+          : "",
     };
   },
 
@@ -318,10 +375,14 @@ export const MsgCreateEvent: MessageFns<MsgCreateEvent> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgCreateEvent>, I>>(base?: I): MsgCreateEvent {
+  create<I extends Exact<DeepPartial<MsgCreateEvent>, I>>(
+    base?: I,
+  ): MsgCreateEvent {
     return MsgCreateEvent.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MsgCreateEvent>, I>>(object: I): MsgCreateEvent {
+  fromPartial<I extends Exact<DeepPartial<MsgCreateEvent>, I>>(
+    object: I,
+  ): MsgCreateEvent {
     const message = createBaseMsgCreateEvent();
     message.creator = object.creator ?? "";
     message.question = object.question ?? "";
@@ -338,15 +399,22 @@ function createBaseMsgCreateEventResponse(): MsgCreateEventResponse {
 }
 
 export const MsgCreateEventResponse: MessageFns<MsgCreateEventResponse> = {
-  encode(message: MsgCreateEventResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: MsgCreateEventResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.id !== 0) {
       writer.uint32(8).uint64(message.id);
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateEventResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): MsgCreateEventResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateEventResponse();
     while (reader.pos < end) {
@@ -381,10 +449,14 @@ export const MsgCreateEventResponse: MessageFns<MsgCreateEventResponse> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgCreateEventResponse>, I>>(base?: I): MsgCreateEventResponse {
+  create<I extends Exact<DeepPartial<MsgCreateEventResponse>, I>>(
+    base?: I,
+  ): MsgCreateEventResponse {
     return MsgCreateEventResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MsgCreateEventResponse>, I>>(object: I): MsgCreateEventResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgCreateEventResponse>, I>>(
+    object: I,
+  ): MsgCreateEventResponse {
     const message = createBaseMsgCreateEventResponse();
     message.id = object.id ?? 0;
     return message;
@@ -396,7 +468,10 @@ function createBaseMsgCreatePartEvent(): MsgCreatePartEvent {
 }
 
 export const MsgCreatePartEvent: MessageFns<MsgCreatePartEvent> = {
-  encode(message: MsgCreatePartEvent, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: MsgCreatePartEvent,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -412,8 +487,12 @@ export const MsgCreatePartEvent: MessageFns<MsgCreatePartEvent> = {
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgCreatePartEvent {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): MsgCreatePartEvent {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreatePartEvent();
     while (reader.pos < end) {
@@ -466,8 +545,8 @@ export const MsgCreatePartEvent: MessageFns<MsgCreatePartEvent> = {
       eventId: isSet(object.eventId)
         ? globalThis.Number(object.eventId)
         : isSet(object.event_id)
-        ? globalThis.Number(object.event_id)
-        : 0,
+          ? globalThis.Number(object.event_id)
+          : 0,
       answers: isSet(object.answers) ? globalThis.String(object.answers) : "",
       amount: isSet(object.amount) ? globalThis.String(object.amount) : "",
     };
@@ -490,10 +569,14 @@ export const MsgCreatePartEvent: MessageFns<MsgCreatePartEvent> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgCreatePartEvent>, I>>(base?: I): MsgCreatePartEvent {
+  create<I extends Exact<DeepPartial<MsgCreatePartEvent>, I>>(
+    base?: I,
+  ): MsgCreatePartEvent {
     return MsgCreatePartEvent.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MsgCreatePartEvent>, I>>(object: I): MsgCreatePartEvent {
+  fromPartial<I extends Exact<DeepPartial<MsgCreatePartEvent>, I>>(
+    object: I,
+  ): MsgCreatePartEvent {
     const message = createBaseMsgCreatePartEvent();
     message.creator = object.creator ?? "";
     message.eventId = object.eventId ?? 0;
@@ -507,51 +590,66 @@ function createBaseMsgCreatePartEventResponse(): MsgCreatePartEventResponse {
   return {};
 }
 
-export const MsgCreatePartEventResponse: MessageFns<MsgCreatePartEventResponse> = {
-  encode(_: MsgCreatePartEventResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    return writer;
-  },
+export const MsgCreatePartEventResponse: MessageFns<MsgCreatePartEventResponse> =
+  {
+    encode(
+      _: MsgCreatePartEventResponse,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      return writer;
+    },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgCreatePartEventResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgCreatePartEventResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): MsgCreatePartEventResponse {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseMsgCreatePartEventResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
       }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skip(tag & 7);
-    }
-    return message;
-  },
+      return message;
+    },
 
-  fromJSON(_: any): MsgCreatePartEventResponse {
-    return {};
-  },
+    fromJSON(_: any): MsgCreatePartEventResponse {
+      return {};
+    },
 
-  toJSON(_: MsgCreatePartEventResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
+    toJSON(_: MsgCreatePartEventResponse): unknown {
+      const obj: any = {};
+      return obj;
+    },
 
-  create<I extends Exact<DeepPartial<MsgCreatePartEventResponse>, I>>(base?: I): MsgCreatePartEventResponse {
-    return MsgCreatePartEventResponse.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<MsgCreatePartEventResponse>, I>>(_: I): MsgCreatePartEventResponse {
-    const message = createBaseMsgCreatePartEventResponse();
-    return message;
-  },
-};
+    create<I extends Exact<DeepPartial<MsgCreatePartEventResponse>, I>>(
+      base?: I,
+    ): MsgCreatePartEventResponse {
+      return MsgCreatePartEventResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<MsgCreatePartEventResponse>, I>>(
+      _: I,
+    ): MsgCreatePartEventResponse {
+      const message = createBaseMsgCreatePartEventResponse();
+      return message;
+    },
+  };
 
 function createBaseMsgValidateEvent(): MsgValidateEvent {
   return { creator: "", eventId: 0, answers: "", source: "" };
 }
 
 export const MsgValidateEvent: MessageFns<MsgValidateEvent> = {
-  encode(message: MsgValidateEvent, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    message: MsgValidateEvent,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -568,7 +666,8 @@ export const MsgValidateEvent: MessageFns<MsgValidateEvent> = {
   },
 
   decode(input: BinaryReader | Uint8Array, length?: number): MsgValidateEvent {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgValidateEvent();
     while (reader.pos < end) {
@@ -621,8 +720,8 @@ export const MsgValidateEvent: MessageFns<MsgValidateEvent> = {
       eventId: isSet(object.eventId)
         ? globalThis.Number(object.eventId)
         : isSet(object.event_id)
-        ? globalThis.Number(object.event_id)
-        : 0,
+          ? globalThis.Number(object.event_id)
+          : 0,
       answers: isSet(object.answers) ? globalThis.String(object.answers) : "",
       source: isSet(object.source) ? globalThis.String(object.source) : "",
     };
@@ -645,10 +744,14 @@ export const MsgValidateEvent: MessageFns<MsgValidateEvent> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgValidateEvent>, I>>(base?: I): MsgValidateEvent {
+  create<I extends Exact<DeepPartial<MsgValidateEvent>, I>>(
+    base?: I,
+  ): MsgValidateEvent {
     return MsgValidateEvent.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MsgValidateEvent>, I>>(object: I): MsgValidateEvent {
+  fromPartial<I extends Exact<DeepPartial<MsgValidateEvent>, I>>(
+    object: I,
+  ): MsgValidateEvent {
     const message = createBaseMsgValidateEvent();
     message.creator = object.creator ?? "";
     message.eventId = object.eventId ?? 0;
@@ -663,12 +766,19 @@ function createBaseMsgValidateEventResponse(): MsgValidateEventResponse {
 }
 
 export const MsgValidateEventResponse: MessageFns<MsgValidateEventResponse> = {
-  encode(_: MsgValidateEventResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+  encode(
+    _: MsgValidateEventResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgValidateEventResponse {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): MsgValidateEventResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgValidateEventResponse();
     while (reader.pos < end) {
@@ -692,11 +802,359 @@ export const MsgValidateEventResponse: MessageFns<MsgValidateEventResponse> = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgValidateEventResponse>, I>>(base?: I): MsgValidateEventResponse {
+  create<I extends Exact<DeepPartial<MsgValidateEventResponse>, I>>(
+    base?: I,
+  ): MsgValidateEventResponse {
     return MsgValidateEventResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<MsgValidateEventResponse>, I>>(_: I): MsgValidateEventResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgValidateEventResponse>, I>>(
+    _: I,
+  ): MsgValidateEventResponse {
     const message = createBaseMsgValidateEventResponse();
+    return message;
+  },
+};
+
+function createBaseMsgSetIncreasePart(): MsgSetIncreasePart {
+  return { creator: "", eventId: 0, amount: "", partId: 0 };
+}
+
+export const MsgSetIncreasePart: MessageFns<MsgSetIncreasePart> = {
+  encode(
+    message: MsgSetIncreasePart,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.eventId !== 0) {
+      writer.uint32(16).uint64(message.eventId);
+    }
+    if (message.amount !== "") {
+      writer.uint32(26).string(message.amount);
+    }
+    if (message.partId !== 0) {
+      writer.uint32(32).uint64(message.partId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): MsgSetIncreasePart {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgSetIncreasePart();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.creator = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 16) {
+            break;
+          }
+
+          message.eventId = longToNumber(reader.uint64());
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.amount = reader.string();
+          continue;
+        }
+        case 4: {
+          if (tag !== 32) {
+            break;
+          }
+
+          message.partId = longToNumber(reader.uint64());
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetIncreasePart {
+    return {
+      creator: isSet(object.creator) ? globalThis.String(object.creator) : "",
+      eventId: isSet(object.eventId)
+        ? globalThis.Number(object.eventId)
+        : isSet(object.event_id)
+          ? globalThis.Number(object.event_id)
+          : 0,
+      amount: isSet(object.amount) ? globalThis.String(object.amount) : "",
+      partId: isSet(object.partId)
+        ? globalThis.Number(object.partId)
+        : isSet(object.part_id)
+          ? globalThis.Number(object.part_id)
+          : 0,
+    };
+  },
+
+  toJSON(message: MsgSetIncreasePart): unknown {
+    const obj: any = {};
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.eventId !== 0) {
+      obj.eventId = Math.round(message.eventId);
+    }
+    if (message.amount !== "") {
+      obj.amount = message.amount;
+    }
+    if (message.partId !== 0) {
+      obj.partId = Math.round(message.partId);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgSetIncreasePart>, I>>(
+    base?: I,
+  ): MsgSetIncreasePart {
+    return MsgSetIncreasePart.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgSetIncreasePart>, I>>(
+    object: I,
+  ): MsgSetIncreasePart {
+    const message = createBaseMsgSetIncreasePart();
+    message.creator = object.creator ?? "";
+    message.eventId = object.eventId ?? 0;
+    message.amount = object.amount ?? "";
+    message.partId = object.partId ?? 0;
+    return message;
+  },
+};
+
+function createBaseMsgSetIncreasePartResponse(): MsgSetIncreasePartResponse {
+  return {};
+}
+
+export const MsgSetIncreasePartResponse: MessageFns<MsgSetIncreasePartResponse> =
+  {
+    encode(
+      _: MsgSetIncreasePartResponse,
+      writer: BinaryWriter = new BinaryWriter(),
+    ): BinaryWriter {
+      return writer;
+    },
+
+    decode(
+      input: BinaryReader | Uint8Array,
+      length?: number,
+    ): MsgSetIncreasePartResponse {
+      const reader =
+        input instanceof BinaryReader ? input : new BinaryReader(input);
+      const end = length === undefined ? reader.len : reader.pos + length;
+      const message = createBaseMsgSetIncreasePartResponse();
+      while (reader.pos < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+        }
+        if ((tag & 7) === 4 || tag === 0) {
+          break;
+        }
+        reader.skip(tag & 7);
+      }
+      return message;
+    },
+
+    fromJSON(_: any): MsgSetIncreasePartResponse {
+      return {};
+    },
+
+    toJSON(_: MsgSetIncreasePartResponse): unknown {
+      const obj: any = {};
+      return obj;
+    },
+
+    create<I extends Exact<DeepPartial<MsgSetIncreasePartResponse>, I>>(
+      base?: I,
+    ): MsgSetIncreasePartResponse {
+      return MsgSetIncreasePartResponse.fromPartial(base ?? ({} as any));
+    },
+    fromPartial<I extends Exact<DeepPartial<MsgSetIncreasePartResponse>, I>>(
+      _: I,
+    ): MsgSetIncreasePartResponse {
+      const message = createBaseMsgSetIncreasePartResponse();
+      return message;
+    },
+  };
+
+function createBaseMsgGetMoneyPart(): MsgGetMoneyPart {
+  return { creator: "", eventId: "", partId: "" };
+}
+
+export const MsgGetMoneyPart: MessageFns<MsgGetMoneyPart> = {
+  encode(
+    message: MsgGetMoneyPart,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.eventId !== "") {
+      writer.uint32(18).string(message.eventId);
+    }
+    if (message.partId !== "") {
+      writer.uint32(26).string(message.partId);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgGetMoneyPart {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgGetMoneyPart();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.creator = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.eventId = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.partId = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgGetMoneyPart {
+    return {
+      creator: isSet(object.creator) ? globalThis.String(object.creator) : "",
+      eventId: isSet(object.eventId)
+        ? globalThis.String(object.eventId)
+        : isSet(object.event_id)
+          ? globalThis.String(object.event_id)
+          : "",
+      partId: isSet(object.partId)
+        ? globalThis.String(object.partId)
+        : isSet(object.part_id)
+          ? globalThis.String(object.part_id)
+          : "",
+    };
+  },
+
+  toJSON(message: MsgGetMoneyPart): unknown {
+    const obj: any = {};
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.eventId !== "") {
+      obj.eventId = message.eventId;
+    }
+    if (message.partId !== "") {
+      obj.partId = message.partId;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgGetMoneyPart>, I>>(
+    base?: I,
+  ): MsgGetMoneyPart {
+    return MsgGetMoneyPart.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgGetMoneyPart>, I>>(
+    object: I,
+  ): MsgGetMoneyPart {
+    const message = createBaseMsgGetMoneyPart();
+    message.creator = object.creator ?? "";
+    message.eventId = object.eventId ?? "";
+    message.partId = object.partId ?? "";
+    return message;
+  },
+};
+
+function createBaseMsgGetMoneyPartResponse(): MsgGetMoneyPartResponse {
+  return {};
+}
+
+export const MsgGetMoneyPartResponse: MessageFns<MsgGetMoneyPartResponse> = {
+  encode(
+    _: MsgGetMoneyPartResponse,
+    writer: BinaryWriter = new BinaryWriter(),
+  ): BinaryWriter {
+    return writer;
+  },
+
+  decode(
+    input: BinaryReader | Uint8Array,
+    length?: number,
+  ): MsgGetMoneyPartResponse {
+    const reader =
+      input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgGetMoneyPartResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgGetMoneyPartResponse {
+    return {};
+  },
+
+  toJSON(_: MsgGetMoneyPartResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgGetMoneyPartResponse>, I>>(
+    base?: I,
+  ): MsgGetMoneyPartResponse {
+    return MsgGetMoneyPartResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MsgGetMoneyPartResponse>, I>>(
+    _: I,
+  ): MsgGetMoneyPartResponse {
+    const message = createBaseMsgGetMoneyPartResponse();
     return message;
   },
 };
@@ -711,9 +1169,17 @@ export interface Msg {
   /** CreateEvent defines the CreateEvent RPC. */
   CreateEvent(request: MsgCreateEvent): Promise<MsgCreateEventResponse>;
   /** CreatePartEvent defines the CreatePartEvent RPC. */
-  CreatePartEvent(request: MsgCreatePartEvent): Promise<MsgCreatePartEventResponse>;
+  CreatePartEvent(
+    request: MsgCreatePartEvent,
+  ): Promise<MsgCreatePartEventResponse>;
   /** ValidateEvent defines the ValidateEvent RPC. */
   ValidateEvent(request: MsgValidateEvent): Promise<MsgValidateEventResponse>;
+  /** SetIncreasePart defines the SetIncreasePart RPC. */
+  SetIncreasePart(
+    request: MsgSetIncreasePart,
+  ): Promise<MsgSetIncreasePartResponse>;
+  /** GetMoneyPart defines the GetMoneyPart RPC. */
+  GetMoneyPart(request: MsgGetMoneyPart): Promise<MsgGetMoneyPartResponse>;
 }
 
 export const MsgServiceName = "bettery.events.v1.Msg";
@@ -727,47 +1193,95 @@ export class MsgClientImpl implements Msg {
     this.CreateEvent = this.CreateEvent.bind(this);
     this.CreatePartEvent = this.CreatePartEvent.bind(this);
     this.ValidateEvent = this.ValidateEvent.bind(this);
+    this.SetIncreasePart = this.SetIncreasePart.bind(this);
+    this.GetMoneyPart = this.GetMoneyPart.bind(this);
   }
   UpdateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse> {
     const data = MsgUpdateParams.encode(request).finish();
     const promise = this.rpc.request(this.service, "UpdateParams", data);
-    return promise.then((data) => MsgUpdateParamsResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      MsgUpdateParamsResponse.decode(new BinaryReader(data)),
+    );
   }
 
   CreateEvent(request: MsgCreateEvent): Promise<MsgCreateEventResponse> {
     const data = MsgCreateEvent.encode(request).finish();
     const promise = this.rpc.request(this.service, "CreateEvent", data);
-    return promise.then((data) => MsgCreateEventResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      MsgCreateEventResponse.decode(new BinaryReader(data)),
+    );
   }
 
-  CreatePartEvent(request: MsgCreatePartEvent): Promise<MsgCreatePartEventResponse> {
+  CreatePartEvent(
+    request: MsgCreatePartEvent,
+  ): Promise<MsgCreatePartEventResponse> {
     const data = MsgCreatePartEvent.encode(request).finish();
     const promise = this.rpc.request(this.service, "CreatePartEvent", data);
-    return promise.then((data) => MsgCreatePartEventResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      MsgCreatePartEventResponse.decode(new BinaryReader(data)),
+    );
   }
 
   ValidateEvent(request: MsgValidateEvent): Promise<MsgValidateEventResponse> {
     const data = MsgValidateEvent.encode(request).finish();
     const promise = this.rpc.request(this.service, "ValidateEvent", data);
-    return promise.then((data) => MsgValidateEventResponse.decode(new BinaryReader(data)));
+    return promise.then((data) =>
+      MsgValidateEventResponse.decode(new BinaryReader(data)),
+    );
+  }
+
+  SetIncreasePart(
+    request: MsgSetIncreasePart,
+  ): Promise<MsgSetIncreasePartResponse> {
+    const data = MsgSetIncreasePart.encode(request).finish();
+    const promise = this.rpc.request(this.service, "SetIncreasePart", data);
+    return promise.then((data) =>
+      MsgSetIncreasePartResponse.decode(new BinaryReader(data)),
+    );
+  }
+
+  GetMoneyPart(request: MsgGetMoneyPart): Promise<MsgGetMoneyPartResponse> {
+    const data = MsgGetMoneyPart.encode(request).finish();
+    const promise = this.rpc.request(this.service, "GetMoneyPart", data);
+    return promise.then((data) =>
+      MsgGetMoneyPartResponse.decode(new BinaryReader(data)),
+    );
   }
 }
 
 interface Rpc {
-  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
+  request(
+    service: string,
+    method: string,
+    data: Uint8Array,
+  ): Promise<Uint8Array>;
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
-  : Partial<T>;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends globalThis.Array<infer U>
+    ? globalThis.Array<DeepPartial<U>>
+    : T extends ReadonlyArray<infer U>
+      ? ReadonlyArray<DeepPartial<U>>
+      : T extends {}
+        ? { [K in keyof T]?: DeepPartial<T[K]> }
+        : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & {
+      [K in Exclude<keyof I, KeysOfUnion<P>>]: never;
+    };
 
 function longToNumber(int64: { toString(): string }): number {
   const num = globalThis.Number(int64.toString());

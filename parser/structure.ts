@@ -5,6 +5,7 @@ import {
   Attribute,
   ValidateEventPayload,
   SetIncreasePartEventPayload,
+  PaidMoneyPartEventPayload,
 } from "./types";
 
 export function parseCreateEvent(attributes: Attribute[]): CreateEventPayload {
@@ -58,6 +59,7 @@ export function validateParserEvent(
     createdAt: BigInt(obj.createdAt),
     refunded: obj.refunded === "true",
     companyFee: BigInt(Number(formatUnits(BigInt(obj.companyFee), 6)) * 100),
+    creatorFee: BigInt(Number(formatUnits(BigInt(obj.creatorFee), 6)) * 100),
   };
 }
 
@@ -114,5 +116,18 @@ export function parseSetIncreasePartEvent(
     amount: BigInt(Number(formatUnits(BigInt(obj.amount), 6)) * 100),
     token: obj.token,
     createdAt: BigInt(obj.createdAt),
+  };
+}
+
+export function parsePaidMoneyPartEvent(
+  attributes: Attribute[],
+): PaidMoneyPartEventPayload {
+  const obj = Object.fromEntries(attributes.map((a) => [a.key, a.value]));
+
+  return {
+    creator: obj.creator,
+    eventId: BigInt(obj.eventId),
+    partId: BigInt(obj.partId),
+    amount: BigInt(Number(formatUnits(BigInt(obj.amount), 6)) * 100),
   };
 }

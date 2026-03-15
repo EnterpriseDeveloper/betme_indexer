@@ -39,6 +39,7 @@ model Participant {
   result    BigInt
   status    String
   createdAt BigInt
+  paid      Boolean
   increase  Boolean   @default(false)
   event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
@@ -54,6 +55,7 @@ model Validator {
   source        String
   refunded      Boolean
   companyAmount BigInt
+  creatorAmount BigInt
   createdAt     BigInt
   event         Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
 

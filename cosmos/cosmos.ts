@@ -3,7 +3,10 @@ import { Tendermint37Client } from "@cosmjs/tendermint-rpc";
 import { QueryClientImpl } from "./proto-ts/bettery/events/v1/query";
 import { createProtobufRpcClient } from "@cosmjs/stargate";
 
-export default async function getParticipantByID(id: number) {
+export default async function getParticipantStatusByID(
+  id: number,
+  eventId: number,
+) {
   const rpcUrl = process.env.RPC_URL;
 
   try {
@@ -13,12 +16,13 @@ export default async function getParticipantByID(id: number) {
     const rpcClient = createProtobufRpcClient(queryClient);
 
     const eventsQuery = new QueryClientImpl(rpcClient);
-    const partRes = await eventsQuery.GetParticipant({
-      id: id,
+    const partRes = await eventsQuery.ParticipantStatus({
+      participantId: id,
+      eventId: eventId,
     });
 
-    if (partRes.participant) {
-      return partRes.participant;
+    if (partRes) {
+      return partRes;
     } else {
       return null;
     }

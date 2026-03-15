@@ -111,6 +111,7 @@ export const ParticipantScalarFieldEnum = {
   result: 'result',
   status: 'status',
   createdAt: 'createdAt',
+  paid: 'paid',
   increase: 'increase'
 } as const
 
@@ -125,6 +126,7 @@ export const ValidatorScalarFieldEnum = {
   source: 'source',
   refunded: 'refunded',
   companyAmount: 'companyAmount',
+  creatorAmount: 'creatorAmount',
   createdAt: 'createdAt'
 } as const
 
