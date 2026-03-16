@@ -1,6 +1,7 @@
 import { PrismaClient } from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { ValidateEventPayload } from "../parser/types";
+import { EventStatus } from "./types";
 
 const FinishedEvent = "FINISHED";
 const RefundEvent = "REFUND";
@@ -42,6 +43,15 @@ export class ValPrismaRepository implements ValRepository {
         where: { id: payload.eventId },
         data: {
           status: payload.refunded ? RefundEvent : FinishedEvent,
+        },
+      });
+
+      await tx.participant.updateMany({
+        where: { eventId: payload.eventId },
+        data: {
+          status: payload.refunded
+            ? EventStatus.REFUNDED
+            : EventStatus.FINISHED,
         },
       });
     });

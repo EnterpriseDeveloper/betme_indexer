@@ -90,7 +90,7 @@ export class PartPrismaRepository implements PartRepository {
           );
           if (part) {
             await tx.participant.update({
-              where: { id: eventId },
+              where: { id: participant.id },
               data: {
                 result:
                   part.resultAmount === 0
